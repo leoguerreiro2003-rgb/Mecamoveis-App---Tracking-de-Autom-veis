@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.History
@@ -122,11 +123,11 @@ fun GerirReparacoesScreen(
                     fontWeight = FontWeight.Bold
                 )
 
-                Box(
-                    modifier = Modifier
-                        .size(45.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFFFA500))
+                Icon(
+                    imageVector = Icons.Default.AccountCircle,
+                    contentDescription = "Perfil",
+                    tint = Color(0xFFFFA500),
+                    modifier = Modifier.size(45.dp)
                 )
             }
 
@@ -144,7 +145,7 @@ fun GerirReparacoesScreen(
             ReparacaoOptionButton(
                 text = "Histórico de reparações",
                 icon = Icons.Default.History,
-                onClick = { /* Navegar para Histórico */ }
+                onClick = { navController.navigate("historico_reparacoes_mecanico") }
             )
 
             Spacer(modifier = Modifier.height(30.dp))

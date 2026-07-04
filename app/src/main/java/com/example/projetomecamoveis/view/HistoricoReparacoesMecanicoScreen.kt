@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,21 +24,41 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.model.ReparacaoComCliente
 import com.example.projetomecamoveis.model.ReparacaoInfo
 import com.example.projetomecamoveis.viewmodel.ReparacaoViewModel
 
 @Composable
-fun HistoricoReparacoesScreen(
+fun HistoricoReparacoesMecanicoScreen(
     navController: NavHostController,
-    clienteId: Int,
     viewModel: ReparacaoViewModel = viewModel()
 ) {
-    LaunchedEffect(Unit) {
-        android.util.Log.d("HistoricoScreen", "Ecrã de histórico aberto para o cliente: $clienteId")
-    }
-
-    val reparacoesState = viewModel.getReparacoesByCliente(clienteId).collectAsState(initial = emptyList())
+    val reparacoesState = viewModel.todasReparacoesConcluidas.collectAsState(initial = emptyList())
     val reparacoes = reparacoesState.value
+
+    var reparacaoParaDeletar by remember { mutableStateOf<ReparacaoInfo?>(null) }
+
+    if (reparacaoParaDeletar != null) {
+        AlertDialog(
+            onDismissRequest = { reparacaoParaDeletar = null },
+            title = { Text(text = "Eliminar Reparação", color = Color.White, fontWeight = FontWeight.Bold) },
+            text = { Text(text = "Tem a certeza que deseja eliminar esta reparação do histórico? Esta ação não pode ser desfeita.", color = Color.LightGray) },
+            confirmButton = {
+                TextButton(onClick = {
+                    reparacaoParaDeletar?.let { viewModel.deletarReparacao(it) }
+                    reparacaoParaDeletar = null
+                }) {
+                    Text(text = "Eliminar", color = Color.Red, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { reparacaoParaDeletar = null }) {
+                    Text(text = "Cancelar", color = Color.White)
+                }
+            },
+            containerColor = Color(0xFF2A2A2A)
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -69,7 +89,7 @@ fun HistoricoReparacoesScreen(
                 }
 
                 Text(
-                    text = "Histórico de Reparações",
+                    text = "Histórico de Oficinas",
                     color = Color(0xFFFFA500),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
@@ -86,7 +106,6 @@ fun HistoricoReparacoesScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             if (reparacoes.isEmpty()) {
-                // ESTADO VAZIO (Imagem 2)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -94,23 +113,23 @@ fun HistoricoReparacoesScreen(
                         .padding(32.dp)
                 ) {
                     Text(
-                        text = "De momento não tem nenhuma Reparação registada.",
+                        text = "Ainda não existem reparações concluídas no sistema.",
                         color = Color.White,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Start,
-                        lineHeight = 22.sp
+                        fontSize = 15.sp
                     )
                 }
             } else {
-                // LISTA DE REPARAÇÕES (Imagem 1)
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
-                    reparacoes.forEach { reparacao ->
-                        ReparacaoCard(reparacao = reparacao)
+                    reparacoes.forEach { item ->
+                        ReparacaoMecanicoPremiumCard(
+                            item = item,
+                            onDeleteClick = { reparacaoParaDeletar = item.reparacao }
+                        )
                     }
                 }
             }
@@ -120,13 +139,17 @@ fun HistoricoReparacoesScreen(
 }
 
 @Composable
-fun ReparacaoCard(reparacao: ReparacaoInfo) {
+fun ReparacaoMecanicoPremiumCard(
+    item: ReparacaoComCliente,
+    onDeleteClick: () -> Unit
+) {
+    val r = item.reparacao
     var expandido by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         // Data e Hora acima do card
         Text(
-            text = reparacao.dataHora,
+            text = r.dataHora,
             color = Color.LightGray,
             fontSize = 12.sp,
             modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
@@ -139,39 +162,57 @@ fun ReparacaoCard(reparacao: ReparacaoInfo) {
                 .padding(24.dp)
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                // Título da Reparação
-                Text(
-                    text = reparacao.titulo,
-                    color = Color(0xFFFFA500),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                // Título e Botão de Lixo
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Reparação ${r.marca}",
+                        color = Color(0xFFFFA500),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    
+                    IconButton(onClick = onDeleteClick, modifier = Modifier.size(24.dp)) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Eliminar",
+                            tint = Color(0xFFFFA500)
+                        )
+                    }
+                }
 
-                // Campos Comuns (Marca, Modelo, Matrícula)
-                HistoricoLinhaInfo(label = "Marca", valor = reparacao.marca)
+                // Campo Especial: Cliente
+                HistoricoMecanicoLinha(label = "Cliente", valor = item.clienteNome)
+                HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
+
+                // Campos Comuns
+                HistoricoMecanicoLinha(label = "Marca", valor = r.marca)
                 HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
                 
-                HistoricoLinhaInfo(label = "Modelo", valor = reparacao.modelo)
+                HistoricoMecanicoLinha(label = "Modelo", valor = r.modelo)
                 HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
                 
-                HistoricoLinhaInfo(label = "Matrícula", valor = reparacao.matricula)
+                HistoricoMecanicoLinha(label = "Matrícula", valor = r.matricula)
 
                 if (expandido) {
                     HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
-                    HistoricoLinhaInfo(label = "Ano", valor = reparacao.ano)
+                    HistoricoMecanicoLinha(label = "Ano", valor = r.ano)
                     
                     HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
                     
                     Column {
                         Text(text = "Peças Utilizadas", color = Color.White, fontSize = 13.sp)
-                        Text(text = reparacao.pecasUtilizadas, color = Color(0xFFFFA500), fontSize = 13.sp)
+                        Text(text = r.pecasUtilizadas, color = Color(0xFFFFA500), fontSize = 13.sp)
                     }
 
                     HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
-                    HistoricoLinhaInfo(label = "Reparação nº", valor = reparacao.numeroReparacao)
+                    HistoricoMecanicoLinha(label = "Reparação nº", valor = r.numeroReparacao)
                     
                     HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
-                    HistoricoLinhaInfo(label = "Valor da Reparação", valor = reparacao.valor)
+                    HistoricoMecanicoLinha(label = "Valor da Reparação", valor = r.valor)
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -193,7 +234,7 @@ fun ReparacaoCard(reparacao: ReparacaoInfo) {
 }
 
 @Composable
-fun HistoricoLinhaInfo(label: String, valor: String) {
+fun HistoricoMecanicoLinha(label: String, valor: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -205,6 +246,6 @@ fun HistoricoLinhaInfo(label: String, valor: String) {
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewHistoricoVazio() {
-    HistoricoReparacoesScreen(navController = rememberNavController(), clienteId = 1)
+fun PreviewHistoricoMecanicoPremiumDelete() {
+    HistoricoReparacoesMecanicoScreen(navController = rememberNavController())
 }

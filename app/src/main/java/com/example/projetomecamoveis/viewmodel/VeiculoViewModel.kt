@@ -18,6 +18,8 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
     private val dao = AppDatabase.getDatabase(application).veiculoDao()
 
     val veiculosEmReparacaoComCliente: Flow<List<VeiculoComCliente>> = dao.getVeiculosEmReparacaoComCliente()
+    
+    val todosVeiculosComCliente: Flow<List<VeiculoComCliente>> = dao.getAllVeiculosComCliente()
 
     fun getVeiculosByCliente(clienteId: Int): Flow<List<VeiculoInfo>> {
         return dao.getVeiculosByCliente(clienteId)
@@ -100,5 +102,59 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
 
     fun resetarSucesso() {
         addSucesso.value = false
+    }
+
+    fun editarVeiculo(
+        veiculoId: Int,
+        clienteId: Int,
+        marca: String,
+        modelo: String,
+        matricula: String,
+        ano: String,
+        kms: String
+    ) {
+        errorMessage.value = null
+
+        if (marca.isBlank() || modelo.isBlank() || matricula.isBlank() || ano.isBlank() || kms.isBlank() || clienteId == 0) {
+            errorMessage.value = "Por favor, preencha todos os campos."
+            return
+        }
+
+        viewModelScope.launch {
+            // Se o cliente mudou, verificar limite de 3
+            val veiculoAtual = dao.getVeiculoById(veiculoId)
+            if (veiculoAtual != null && veiculoAtual.clienteId != clienteId) {
+                val listaNovoDono = dao.getVeiculosByClienteList(clienteId)
+                if (listaNovoDono.size >= 3) {
+                    errorMessage.value = "Este cliente já tem o máximo de veículos associados."
+                    return@launch
+                }
+            }
+
+            val veiculoEditado = VeiculoInfo(
+                id = veiculoId,
+                clienteId = clienteId,
+                marca = marca,
+                modelo = modelo,
+                matricula = matricula.trim(),
+                ano = ano,
+                kms = kms,
+                emReparacao = veiculoAtual?.emReparacao ?: false,
+                ultimoEstado = veiculoAtual?.ultimoEstado ?: "",
+                dataIniciada = veiculoAtual?.dataIniciada ?: "",
+                dataEmReparacao = veiculoAtual?.dataEmReparacao ?: "",
+                dataRevisao = veiculoAtual?.dataRevisao ?: "",
+                dataConcluida = veiculoAtual?.dataConcluida ?: ""
+            )
+
+            dao.update(veiculoEditado)
+            addSucesso.value = true
+        }
+    }
+
+    fun deletarVeiculo(veiculo: VeiculoInfo) {
+        viewModelScope.launch {
+            dao.delete(veiculo)
+        }
     }
 }

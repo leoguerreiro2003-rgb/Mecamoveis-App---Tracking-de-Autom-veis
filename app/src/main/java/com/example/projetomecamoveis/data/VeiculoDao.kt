@@ -33,6 +33,14 @@ interface VeiculoDao {
     """)
     fun getVeiculosEmReparacaoComCliente(): Flow<List<VeiculoComCliente>>
 
+    @Query("""
+        SELECT v.*, c.name as clienteNome 
+        FROM veiculos v 
+        INNER JOIN clientes c ON v.clienteId = c.id 
+        ORDER BY v.id DESC
+    """)
+    fun getAllVeiculosComCliente(): Flow<List<VeiculoComCliente>>
+
     @Query("UPDATE veiculos SET emReparacao = :emReparacao, ultimoEstado = :estado WHERE id = :veiculoId")
     suspend fun atualizarEstadoReparacao(veiculoId: Int, emReparacao: Boolean, estado: String)
 
@@ -47,4 +55,10 @@ interface VeiculoDao {
 
     @Query("UPDATE veiculos SET dataConcluida = :data WHERE id = :veiculoId")
     suspend fun atualizarDataConcluida(veiculoId: Int, data: String)
+
+    @androidx.room.Update
+    suspend fun update(veiculo: VeiculoInfo)
+
+    @androidx.room.Delete
+    suspend fun delete(veiculo: VeiculoInfo)
 }

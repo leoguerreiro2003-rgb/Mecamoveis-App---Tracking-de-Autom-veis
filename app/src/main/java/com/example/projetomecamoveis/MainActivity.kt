@@ -16,11 +16,16 @@ import com.example.projetomecamoveis.view.LoginClienteScreen
 import com.example.projetomecamoveis.view.LoginMecanicoScreen
 import com.example.projetomecamoveis.view.MeusVeiculosScreen
 import com.example.projetomecamoveis.view.NovoVeiculoScreen
+import com.example.projetomecamoveis.view.NovoVeiculoMecanicoScreen
+import com.example.projetomecamoveis.view.EditarVeiculoScreen
 import com.example.projetomecamoveis.view.HistoricoReparacoesScreen
 import com.example.projetomecamoveis.view.GerirClientesScreen
 import com.example.projetomecamoveis.view.GerirReparacoesScreen
+import com.example.projetomecamoveis.view.GerirVeiculosScreen
+import com.example.projetomecamoveis.view.ListaVeiculosMecanicoScreen
 import com.example.projetomecamoveis.view.NovaReparacaoScreen
 import com.example.projetomecamoveis.view.AtualizarEstadoReparacaoScreen
+import com.example.projetomecamoveis.view.HistoricoReparacoesMecanicoScreen
 import com.example.projetomecamoveis.view.DetalhesEstadoReparacaoScreen
 import com.example.projetomecamoveis.view.ListaClientesScreen
 import com.example.projetomecamoveis.view.MenuScreen
@@ -78,6 +83,14 @@ fun AppNavigation() {
         }
         composable("gerir_clientes") { GerirClientesScreen(navController) }
         composable("gerir_reparacoes") { GerirReparacoesScreen(navController) }
+        composable("gerir_veiculos") { GerirVeiculosScreen(navController) }
+        composable("novo_veiculo_mecanico") { NovoVeiculoMecanicoScreen(navController) }
+        composable("editar_veiculo/{veiculoId}") { backStackEntry ->
+            val veiculoId = backStackEntry.arguments?.getString("veiculoId")?.toIntOrNull() ?: 0
+            EditarVeiculoScreen(navController, veiculoId)
+        }
+        composable("lista_veiculos_mecanico") { ListaVeiculosMecanicoScreen(navController) }
+        composable("historico_reparacoes_mecanico") { HistoricoReparacoesMecanicoScreen(navController) }
         composable("nova_reparacao") { NovaReparacaoScreen(navController) }
         composable("atualizar_estado_reparacao/{veiculoId}") { backStackEntry ->
             val veiculoId = backStackEntry.arguments?.getString("veiculoId")?.toIntOrNull() ?: 0

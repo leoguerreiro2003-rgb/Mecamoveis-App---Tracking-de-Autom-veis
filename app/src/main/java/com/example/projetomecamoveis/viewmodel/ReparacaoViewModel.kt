@@ -4,10 +4,13 @@ import android.app.Application
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import android.util.Log
 import com.example.projetomecamoveis.data.AppDatabase
 import com.example.projetomecamoveis.model.ReparacaoInfo
+import com.example.projetomecamoveis.model.ReparacaoComCliente
 import com.example.projetomecamoveis.model.VeiculoInfo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -16,6 +19,9 @@ import java.util.Locale
 class ReparacaoViewModel(application: Application) : AndroidViewModel(application) {
     private val dao = AppDatabase.getDatabase(application).reparacaoDao()
     private val veiculoDao = AppDatabase.getDatabase(application).veiculoDao()
+
+    val todasReparacoesConcluidas: Flow<List<ReparacaoComCliente>> = dao.getAllReparacoesConcluidasComCliente()
+        .onEach { Log.d("ReparacaoViewModel", "Histórico Mecânico: Encontradas ${it.size} reparações") }
 
     var addSucesso = mutableStateOf(false)
         private set
@@ -93,11 +99,19 @@ class ReparacaoViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch {
             val dataFormatada = SimpleDateFormat("dd/MM  HH:mm", Locale.getDefault()).format(Date())
             
-            // Atualizar estado geral e sair da oficina se concluída
+            // Obter matricula do veiculo para atualizar o log de reparação
+            val veiculo = veiculoDao.getVeiculoById(veiculoId)
+            
+            // Atualizar estado geral e sair da oficina se concluída no veículo
             val aindaEmReparacao = novoEstado != "Reparação Concluída"
             veiculoDao.atualizarEstadoReparacao(veiculoId, aindaEmReparacao, novoEstado)
 
-            // Atualizar data do estado específico
+            // Atualizar o log da reparação para que apareça no histórico
+            if (veiculo != null) {
+                dao.atualizarEstadoUltimaReparacao(veiculo.matricula, novoEstado)
+            }
+
+            // Atualizar data do estado específico no veículo
             when (novoEstado) {
                 "Reparação Iniciada" -> veiculoDao.atualizarDataIniciada(veiculoId, dataFormatada)
                 "Em Reparação" -> veiculoDao.atualizarDataEmReparacao(veiculoId, dataFormatada)
@@ -112,5 +126,11 @@ class ReparacaoViewModel(application: Application) : AndroidViewModel(applicatio
     fun resetarSucesso() {
         addSucesso.value = false
         errorMessage.value = null
+    }
+
+    fun deletarReparacao(reparacao: ReparacaoInfo) {
+        viewModelScope.launch {
+            dao.delete(reparacao)
+        }
     }
 }

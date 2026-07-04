@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,7 +61,12 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
                     Text(text = "$primeiroNome!", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
 
-                Box(modifier = Modifier.size(45.dp).clip(CircleShape).background(Color(0xFFFFA500)))
+                Icon(
+                    imageVector = Icons.Default.AccountCircle,
+                    contentDescription = "Perfil",
+                    tint = Color(0xFFFFA500),
+                    modifier = Modifier.size(45.dp)
+                )
             }
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -74,7 +81,7 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
 
             MenuButton(text = "Gerir Clientes") { navController.navigate("gerir_clientes") }
             Spacer(modifier = Modifier.height(16.dp))
-            MenuButton(text = "Gerir Veículos") { /* Navegar */ }
+            MenuButton(text = "Gerir Veículos") { navController.navigate("gerir_veiculos") }
             Spacer(modifier = Modifier.height(16.dp))
             MenuButton(text = "Gerir Orçamentos") { /* Navegar */ }
             Spacer(modifier = Modifier.height(16.dp))
