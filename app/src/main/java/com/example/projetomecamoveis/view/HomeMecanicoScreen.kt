@@ -14,10 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -83,7 +80,7 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
             Spacer(modifier = Modifier.height(16.dp))
             MenuButton(text = "Gerir Veículos") { navController.navigate("gerir_veiculos") }
             Spacer(modifier = Modifier.height(16.dp))
-            MenuButton(text = "Gerir Orçamentos") { /* Navegar */ }
+            MenuButton(text = "Gerir Orçamentos") { navController.navigate("gerir_orcamentos") }
             Spacer(modifier = Modifier.height(16.dp))
             MenuButton(text = "Gerir Reparações") { navController.navigate("gerir_reparacoes") }
             Spacer(modifier = Modifier.height(16.dp))
@@ -91,4 +88,5 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
         }
     }
 }
+
 

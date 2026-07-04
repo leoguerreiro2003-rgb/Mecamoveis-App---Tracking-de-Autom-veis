@@ -25,6 +25,9 @@ interface ReparacaoDao {
     """)
     fun getAllReparacoesConcluidasComCliente(): Flow<List<ReparacaoComCliente>>
 
+    @Query("SELECT * FROM reparacoes WHERE clienteId = :clienteId AND estado != 'Reparação Concluída' ORDER BY id DESC")
+    fun getReparacoesAtivasByCliente(clienteId: Int): Flow<List<ReparacaoInfo>>
+
     @Query("SELECT * FROM reparacoes WHERE matricula = :matricula ORDER BY id DESC LIMIT 1")
     fun getUltimaReparacaoPorVeiculo(matricula: String): Flow<ReparacaoInfo?>
 

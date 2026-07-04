@@ -8,14 +8,16 @@ import com.example.projetomecamoveis.model.LoginClienteInfo
 import com.example.projetomecamoveis.model.LoginMecanicoInfo
 import com.example.projetomecamoveis.model.VeiculoInfo
 import com.example.projetomecamoveis.model.ReparacaoInfo
+import com.example.projetomecamoveis.model.OrcamentoInfo
 
-@Database(entities = [LoginClienteInfo::class, LoginMecanicoInfo::class, VeiculoInfo::class, ReparacaoInfo::class], version = 8, exportSchema = false)
+@Database(entities = [LoginClienteInfo::class, LoginMecanicoInfo::class, VeiculoInfo::class, ReparacaoInfo::class, OrcamentoInfo::class], version = 8, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun loginClienteDao(): LoginClienteDao
     abstract fun loginMecanicoDao(): LoginMecanicoDao
     abstract fun veiculoDao(): VeiculoDao
     abstract fun reparacaoDao(): ReparacaoDao
+    abstract fun orcamentoDao(): OrcamentoDao
 
     companion object {
         @Volatile

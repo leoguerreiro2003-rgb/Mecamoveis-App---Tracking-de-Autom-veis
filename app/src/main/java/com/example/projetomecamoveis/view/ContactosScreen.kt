@@ -15,10 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.LoginMecanicoInfo
 import com.example.projetomecamoveis.viewmodel.ContactosViewModel
@@ -137,3 +139,4 @@ fun LinhaContacto(label: String, valor: String) {
         Text(text = valor, color = Color(0xFFFFA500), fontSize = 14.sp)
     }
 }
+

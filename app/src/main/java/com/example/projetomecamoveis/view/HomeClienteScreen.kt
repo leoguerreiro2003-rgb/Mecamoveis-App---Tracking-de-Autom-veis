@@ -33,7 +33,7 @@ fun HomeClienteScreen(
     viewModel: VeiculoViewModel = viewModel()
 ) {
     val primeiroNome = clienteNome.trim().split(" ").firstOrNull() ?: clienteNome
-    
+
     var showStatusDialog by remember { mutableStateOf(false) }
     val veiculosEmReparacaoState = viewModel.getVeiculosEmReparacao(clienteId).collectAsState(initial = emptyList())
     val veiculosEmReparacao = veiculosEmReparacaoState.value
@@ -142,7 +142,7 @@ fun HomeClienteScreen(
             MenuButton(text = "Estado Reparação") { showStatusDialog = true }
             Spacer(modifier = Modifier.height(16.dp))
 
-            MenuButton(text = "Histórico De Orçamentos") { /* Navegar */ }
+            MenuButton(text = "Histórico De Orçamentos") { navController.navigate("historico_orcamentos/$clienteId") }
             Spacer(modifier = Modifier.height(16.dp))
 
             MenuButton(text = "Histórico de Reparações") { 

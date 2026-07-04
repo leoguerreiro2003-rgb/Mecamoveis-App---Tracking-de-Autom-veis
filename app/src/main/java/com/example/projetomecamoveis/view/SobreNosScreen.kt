@@ -13,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 
 // ─────────────────────────────────────────────
@@ -86,4 +88,10 @@ fun SobreNosScreen(navController: NavController) {
             }
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewSobreNos() {
+    SobreNosScreen(navController = rememberNavController())
 }

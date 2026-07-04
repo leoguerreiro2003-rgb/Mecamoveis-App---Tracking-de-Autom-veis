@@ -19,6 +19,7 @@ import com.example.projetomecamoveis.view.NovoVeiculoScreen
 import com.example.projetomecamoveis.view.NovoVeiculoMecanicoScreen
 import com.example.projetomecamoveis.view.EditarVeiculoScreen
 import com.example.projetomecamoveis.view.HistoricoReparacoesScreen
+import com.example.projetomecamoveis.view.HistoricoOrcamentosScreen
 import com.example.projetomecamoveis.view.GerirClientesScreen
 import com.example.projetomecamoveis.view.GerirReparacoesScreen
 import com.example.projetomecamoveis.view.GerirVeiculosScreen
@@ -27,6 +28,9 @@ import com.example.projetomecamoveis.view.NovaReparacaoScreen
 import com.example.projetomecamoveis.view.AtualizarEstadoReparacaoScreen
 import com.example.projetomecamoveis.view.HistoricoReparacoesMecanicoScreen
 import com.example.projetomecamoveis.view.DetalhesEstadoReparacaoScreen
+import com.example.projetomecamoveis.view.GerirOrcamentosScreen
+import com.example.projetomecamoveis.view.NovoOrcamentoScreen
+import com.example.projetomecamoveis.view.EditarOrcamentoScreen
 import com.example.projetomecamoveis.view.ListaClientesScreen
 import com.example.projetomecamoveis.view.MenuScreen
 import com.example.projetomecamoveis.view.SobreNosScreen
@@ -81,7 +85,17 @@ fun AppNavigation() {
             val id = backStackEntry.arguments?.getString("clienteId")?.toIntOrNull() ?: 0
             HistoricoReparacoesScreen(navController, id)
         }
+        composable("historico_orcamentos/{clienteId}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("clienteId")?.toIntOrNull() ?: 0
+            HistoricoOrcamentosScreen(navController, id)
+        }
         composable("gerir_clientes") { GerirClientesScreen(navController) }
+        composable("gerir_orcamentos") { GerirOrcamentosScreen(navController) }
+        composable("novo_orcamento") { NovoOrcamentoScreen(navController) }
+        composable("editar_orcamento/{orcamentoId}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("orcamentoId")?.toIntOrNull() ?: 0
+            EditarOrcamentoScreen(navController, id)
+        }
         composable("gerir_reparacoes") { GerirReparacoesScreen(navController) }
         composable("gerir_veiculos") { GerirVeiculosScreen(navController) }
         composable("novo_veiculo_mecanico") { NovoVeiculoMecanicoScreen(navController) }
