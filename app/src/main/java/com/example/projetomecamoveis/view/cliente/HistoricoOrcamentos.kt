@@ -67,12 +67,21 @@ fun HistoricoOrcamentosScreen(
                     )
                 }
 
-                Text(
-                    text = "Histórico de Orçamentos",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+                    Text(
+                        text = "Histórico",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = " Orçamentos",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,

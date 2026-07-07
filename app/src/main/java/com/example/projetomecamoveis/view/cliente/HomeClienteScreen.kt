@@ -112,7 +112,7 @@ fun HomeClienteScreen(
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -164,15 +164,15 @@ fun HomeClienteScreen(
             // --- BOTÕES DE MENU ---
             HomeClienteMenuButton(text = "Os Meus Veículos") { navController.navigate("meus_veiculos/$clienteId") }
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             HomeClienteMenuButton(text = "Estado Reparação") { showStatusDialog = true }
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             HomeClienteMenuButton(text = "Histórico De Orçamentos") { navController.navigate("historico_orcamentos/$clienteId") }
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             HomeClienteMenuButton(text = "Histórico de Reparações") {
                 android.util.Log.d("HomeCliente", "Navegando para histórico do cliente: $clienteId")

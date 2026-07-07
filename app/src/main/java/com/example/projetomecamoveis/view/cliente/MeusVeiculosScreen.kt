@@ -92,7 +92,7 @@ fun MeusVeiculosScreen(
                 Row {
 
                     Text(
-                        text = "Os Meus",
+                        text = "Os Meus ",
                         color = Color(0xFFFFA500),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold

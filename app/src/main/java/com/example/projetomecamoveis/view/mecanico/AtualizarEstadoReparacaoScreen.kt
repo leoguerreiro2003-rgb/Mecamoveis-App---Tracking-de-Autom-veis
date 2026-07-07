@@ -107,13 +107,22 @@ fun AtualizarEstadoReparacaoScreen(
                         modifier = Modifier.size(30.dp)
                     )
                 }
+                Row {
+                    Text(
+                        text = "Atualizar ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
 
-                Text(
-                    text = "Atualizar Reparação",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                    Text(
+                        text = "Reparação",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,

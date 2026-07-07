@@ -278,12 +278,23 @@ fun NovoOrcamentoContent(
                     )
                 }
 
-                Text(
-                    text = "Novo Orçamento",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+
+                    Text(
+                        text = "Novo ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Orçamento",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
@@ -407,7 +418,7 @@ fun OrcamentoSeletorCampo(label: String, valorMostrado: String, estaAtivo: Boole
                 .fillMaxWidth()
                 .height(55.dp)
                 .background(
-                    color = if (estaAtivo) Color(0xFF3D3D3D) else Color(0xFF2A2A2A), 
+                    color = if (estaAtivo) Color(0xFF3D3D3D) else Color(0xFF2A2A2A),
                     shape = RoundedCornerShape(28.dp)
                 )
                 .then(if (estaAtivo) Modifier.clickable { onClick() } else Modifier)

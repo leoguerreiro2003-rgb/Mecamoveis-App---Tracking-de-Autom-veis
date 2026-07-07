@@ -319,12 +319,22 @@ fun EditarOrcamentoScreen(
                     )
                 }
 
-                Text(
-                    text = "Editar Orçamento",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+                    Text(
+                        text = "Editar ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Orçamento",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,

@@ -85,7 +85,7 @@ fun NovoVeiculoScreen(
 
                 Row {
                     Text(
-                        text = "Novo",
+                        text = "Novo ",
                         color = Color(0xFFFFA500),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold

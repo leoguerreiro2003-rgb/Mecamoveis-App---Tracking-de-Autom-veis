@@ -124,12 +124,21 @@ fun GerirReparacoesScreen(
                     )
                 }
 
-                Text(
-                    text = "Gerir Reparações",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+                    Text(
+                        text = "Gerir ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Reparações",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,

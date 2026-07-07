@@ -136,12 +136,22 @@ fun NovoVeiculoMecanicoScreen(
                     )
                 }
 
-                Text(
-                    text = "Novo Veículo",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+
+                    Text(
+                        text = "Novo ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Veículo",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,

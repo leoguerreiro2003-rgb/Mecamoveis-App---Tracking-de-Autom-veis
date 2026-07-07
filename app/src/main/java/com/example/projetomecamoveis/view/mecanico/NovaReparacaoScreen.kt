@@ -233,12 +233,22 @@ fun NovaReparacaoScreen(
                     )
                 }
 
-                Text(
-                    text = "Nova Reparação",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+
+                    Text(
+                        text = "Nova ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Reparação",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,

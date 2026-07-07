@@ -131,13 +131,22 @@ fun LoginMecanicoScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = "Login Mecânico",
-                color = Color(0xFFFFA500),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row {
 
+                Text(
+                    text = "Login ",
+                    color = Color(0xFFFFA500),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = "Mecânico",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
             Spacer(modifier = Modifier.height(5.dp))
 
             Box(
@@ -179,7 +188,8 @@ fun LoginMecanicoScreen(
                 onClick = {
                     viewModel.verificarLoginMecanico(email, palavraPasse) { mecanico ->
                         if (mecanico != null) {
-                            val nome = mecanico.nome.trim().split(" ").firstOrNull() ?: mecanico.nome
+                            val nome =
+                                mecanico.nome.trim().split(" ").firstOrNull() ?: mecanico.nome
                             navController.navigate("home_mecanico/$nome")
                         }
                     }

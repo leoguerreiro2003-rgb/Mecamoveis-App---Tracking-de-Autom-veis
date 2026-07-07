@@ -74,7 +74,7 @@ fun HistoricoReparacoesScreen(
                 Row {
 
                     Text(
-                        text = "Histórico de",
+                        text = "Histórico de ",
                         color = Color(0xFFFFA500),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold

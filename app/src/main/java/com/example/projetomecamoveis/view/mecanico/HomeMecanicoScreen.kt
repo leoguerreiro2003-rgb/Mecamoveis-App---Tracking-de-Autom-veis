@@ -36,7 +36,7 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -86,19 +86,19 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
 
             HomeMecanicoMenuButton(text = "Gerir Clientes") { navController.navigate("gerir_clientes") }
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             HomeMecanicoMenuButton(text = "Gerir Veículos") { navController.navigate("gerir_veiculos") }
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             HomeMecanicoMenuButton(text = "Gerir Orçamentos") { navController.navigate("gerir_orcamentos") }
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             HomeMecanicoMenuButton(text = "Gerir Reparações") { navController.navigate("gerir_reparacoes") }
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             HomeMecanicoMenuButton(text = "Gerir Prazos") { /* Navegar */ }
         }

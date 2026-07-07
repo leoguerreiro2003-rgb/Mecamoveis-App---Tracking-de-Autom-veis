@@ -65,12 +65,23 @@ fun ListaClientesScreen(
                     )
                 }
 
-                Text(
-                    text = "Lista de Clientes",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+
+                    Text(
+                        text = "Lista ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Clientes",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,

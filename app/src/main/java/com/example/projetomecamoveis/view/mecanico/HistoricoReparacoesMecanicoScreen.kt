@@ -101,12 +101,22 @@ fun HistoricoReparacoesMecanicoScreen(
                     )
                 }
 
-                Text(
-                    text = "Histórico de Oficinas",
-                    color = Color(0xFFFFA500),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row {
+
+                    Text(
+                        text = "Histórico de ",
+                        color = Color(0xFFFFA500),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Reparações",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
