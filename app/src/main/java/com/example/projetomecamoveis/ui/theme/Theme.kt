@@ -52,7 +52,6 @@ fun ProjetoMecaMoveisTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
         content = content
     )
 }
