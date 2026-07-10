@@ -204,11 +204,11 @@ fun GerirOrcamentosScreen(
                     )
                 }
 
-                Box(
-                    modifier = Modifier
-                        .size(45.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFFFBD49))
+                Icon(
+                    imageVector = Icons.Default.AccountCircle,
+                    contentDescription = "Perfil",
+                    tint = Color(0xFFFFBD49),
+                    modifier = Modifier.size(45.dp)
                 )
             }
 
