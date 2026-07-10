@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.LoginClienteViewModel
 import com.example.projetomecamoveis.viewmodel.VeiculoViewModel
 
@@ -122,7 +123,7 @@ fun EditarVeiculoScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showClienteDialog = false }) {
-                    Text("Fechar", color = Color(0xFFFFA500))
+                    Text("Fechar", color = Color(0xFFFFBD49))
                 }
             },
             containerColor = Color(0xFF2A2A2A)
@@ -163,23 +164,25 @@ fun EditarVeiculoScreen(
                 Row {
                     Text(
                         text = "Editar ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Veículo",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
                 }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -284,7 +287,8 @@ fun EditarVeiculoScreen(
                             text = "Editar",
                             color = Color.White,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = LexendFontFamily
                         )
                     }
                 }
@@ -320,7 +324,7 @@ fun CampoEdicao(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFF3D3D3D),
                 unfocusedContainerColor = Color(0xFF3D3D3D),
-                focusedBorderColor = Color(0xFFFFA500),
+                focusedBorderColor = Color(0xFFFFBD49),
                 unfocusedBorderColor = Color(0xFF555454),
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White

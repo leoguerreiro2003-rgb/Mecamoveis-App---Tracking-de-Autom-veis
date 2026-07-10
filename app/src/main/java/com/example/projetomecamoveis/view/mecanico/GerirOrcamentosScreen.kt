@@ -28,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.LoginClienteViewModel
 import com.example.projetomecamoveis.viewmodel.OrcamentoViewModel
 
@@ -81,7 +82,7 @@ fun GerirOrcamentosScreen(
                                 )
                                 Text(
                                     text = cliente.email,
-                                    color = Color(0xFFFFA500),
+                                    color = Color(0xFFFFBD49),
                                     fontSize = 13.sp
                                 )
                             }
@@ -92,7 +93,7 @@ fun GerirOrcamentosScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showClienteDialog = false }) {
-                    Text("Fechar", color = Color(0xFFFFA500))
+                    Text("Fechar", color = Color(0xFFFFBD49))
                 }
             },
             containerColor = Color(0xFF2A2A2A)
@@ -137,7 +138,7 @@ fun GerirOrcamentosScreen(
                                 )
                                 Text(
                                     text = "Carro: ${item.marca} ${item.modelo}",
-                                    color = Color(0xFFFFA500),
+                                    color = Color(0xFFFFBD49),
                                     fontSize = 13.sp
                                 )
                             }
@@ -148,7 +149,7 @@ fun GerirOrcamentosScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showEditarDialog = false }) {
-                    Text("Fechar", color = Color(0xFFFFA500))
+                    Text("Fechar", color = Color(0xFFFFBD49))
                 }
             },
             containerColor = Color(0xFF2A2A2A)
@@ -188,16 +189,18 @@ fun GerirOrcamentosScreen(
                 Row {
                     Text(
                         text = "Gerir ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Orçamentos",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
                 }
 
@@ -205,7 +208,7 @@ fun GerirOrcamentosScreen(
                     modifier = Modifier
                         .size(45.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFFFA500))
+                        .background(Color(0xFFFFBD49))
                 )
             }
 
@@ -250,7 +253,7 @@ fun GerirOrcamentosOptionButton(
             .fillMaxWidth()
             .height(80.dp),
         shape = RoundedCornerShape(40.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFBD49))
     ) {
         Row(
             modifier = Modifier
@@ -285,7 +288,8 @@ fun GerirOrcamentosOptionButton(
                 text = text,
                 color = Color.Black,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontFamily = LexendFontFamily
             )
         }
     }

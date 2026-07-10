@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.LoginClienteInfo
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.LoginClienteViewModel
 
 @Composable
@@ -69,16 +70,18 @@ fun ListaClientesScreen(
 
                     Text(
                         text = "Lista ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Clientes",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                 }
@@ -86,7 +89,7 @@ fun ListaClientesScreen(
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -134,7 +137,7 @@ fun ClienteCard(cliente: LoginClienteInfo) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
                 text = cliente.name,
-                color = Color(0xFFFFA500),
+                color = Color(0xFFFFBD49),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )

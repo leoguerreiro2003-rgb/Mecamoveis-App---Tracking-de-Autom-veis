@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 
 @Composable
 fun GerirVeiculosScreen(navController: NavHostController) {
@@ -58,15 +59,16 @@ fun GerirVeiculosScreen(navController: NavHostController) {
 
                 Text(
                     text = "Veículos",
-                    color = Color(0xFFFFA500),
+                    color = Color(0xFFFFBD49),
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LexendFontFamily
                 )
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -106,7 +108,7 @@ fun GerirVeiculosOptionButton(
             .fillMaxWidth()
             .height(80.dp),
         shape = RoundedCornerShape(40.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFBD49))
     ) {
         Row(
             modifier = Modifier
@@ -141,7 +143,8 @@ fun GerirVeiculosOptionButton(
                 text = text,
                 color = Color.Black,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontFamily = LexendFontFamily
             )
         }
     }

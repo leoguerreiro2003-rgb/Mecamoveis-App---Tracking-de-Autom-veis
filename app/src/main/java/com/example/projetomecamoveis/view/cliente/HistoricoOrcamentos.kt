@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.OrcamentoDetalhado
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.OrcamentoViewModel
 
 @Composable
@@ -70,23 +71,25 @@ fun HistoricoOrcamentosScreen(
                 Row {
                     Text(
                         text = "Histórico",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = " Orçamentos",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
                 }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -144,7 +147,7 @@ fun OrcamentoCard(orcamento: OrcamentoDetalhado) {
                 ) {
                     Text(
                         text = orcamento.orcamento.titulo,
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f)
@@ -185,7 +188,7 @@ fun OrcamentoCard(orcamento: OrcamentoDetalhado) {
                                 "Reparação Nº ${orcamento.numeroReparacao}"
                             else
                                 "Não está associado a uma reparação.",
-                            color = Color(0xFFFFA500),
+                            color = Color(0xFFFFBD49),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -218,7 +221,7 @@ fun LinhaInfoOrcamento(label: String, valor: String) {
         Text(text = label, color = Color.White, fontSize = 13.sp)
         Text(
             text = valor,
-            color = Color(0xFFFFA500),
+            color = Color(0xFFFFBD49),
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold
         )

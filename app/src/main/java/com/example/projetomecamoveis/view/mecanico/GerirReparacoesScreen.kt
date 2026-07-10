@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.VeiculoViewModel
 
 @Composable
@@ -76,7 +77,7 @@ fun GerirReparacoesScreen(
                                 )
                                 Text(
                                     text = "Cliente: ${item.clienteNome}",
-                                    color = Color(0xFFFFA500),
+                                    color = Color(0xFFFFBD49),
                                     fontSize = 13.sp
                                 )
                             }
@@ -87,7 +88,7 @@ fun GerirReparacoesScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showAtualizarDialog = false }) {
-                    Text("Fechar", color = Color(0xFFFFA500))
+                    Text("Fechar", color = Color(0xFFFFBD49))
                 }
             },
             containerColor = Color(0xFF2A2A2A)
@@ -127,23 +128,25 @@ fun GerirReparacoesScreen(
                 Row {
                     Text(
                         text = "Gerir ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Reparações",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
                 }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -188,7 +191,7 @@ fun GerirReparacoesOptionButton(
             .fillMaxWidth()
             .height(80.dp),
         shape = RoundedCornerShape(40.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFBD49))
     ) {
         Row(
             modifier = Modifier
@@ -208,7 +211,8 @@ fun GerirReparacoesOptionButton(
                 text = text,
                 color = Color.Black,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontFamily = LexendFontFamily
             )
         }
     }

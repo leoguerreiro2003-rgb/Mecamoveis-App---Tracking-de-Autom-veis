@@ -90,7 +90,7 @@ fun DetalhesEstadoReparacaoScreen(
 
                 Text(
                     text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(color = Color(0xFFFFA500))) { append("Olá, ") }
+                        withStyle(style = SpanStyle(color = Color(0xFFFFBD49))) { append("Olá, ") }
                         withStyle(
                             style = SpanStyle(
                                 color = Color.White,
@@ -105,7 +105,7 @@ fun DetalhesEstadoReparacaoScreen(
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -182,7 +182,7 @@ fun WaveCircle(progress: Float) {
             .size(100.dp)
             .clip(CircleShape)
             .background(Color.Black)
-            .border(2.dp, Color(0xFFFFA500), CircleShape),
+            .border(2.dp, Color(0xFFFFBD49), CircleShape),
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -210,7 +210,7 @@ fun WaveCircle(progress: Float) {
             clipPath(Path().apply { addOval(size.toRect()) }) {
                 drawPath(
                     path = wavePath,
-                    color = Color(0xFFFFA500)
+                    color = Color(0xFFFFBD49)
                 )
             }
         }
@@ -219,7 +219,7 @@ fun WaveCircle(progress: Float) {
 
 @Composable
 fun TimelineItem(label: String, isAtivo: Boolean) {
-    val backgroundColor = if (isAtivo) Color(0xFFFFA500) else Color(0xFF5D4037).copy(alpha = 0.6f)
+    val backgroundColor = if (isAtivo) Color(0xFFFFBD49) else Color(0xFF5D4037).copy(alpha = 0.6f)
 
     Box(
         modifier = Modifier
@@ -247,7 +247,7 @@ fun TimelineItem(label: String, isAtivo: Boolean) {
                         modifier = Modifier
                             .size(10.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFFFFA500))
+                            .background(Color(0xFFFFBD49))
                     )
                 }
             }

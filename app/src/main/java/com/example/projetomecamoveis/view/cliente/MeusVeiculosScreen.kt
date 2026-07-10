@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.VeiculoInfo
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.VeiculoViewModel
 
 @Composable
@@ -52,7 +53,7 @@ fun MeusVeiculosScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showDialog = false }) {
-                    Text(text = "OK", color = Color(0xFFFFA500), fontWeight = FontWeight.Bold)
+                    Text(text = "OK", color = Color(0xFFFFBD49), fontWeight = FontWeight.Bold)
                 }
             },
             containerColor = Color(0xFF2A2A2A)
@@ -93,16 +94,18 @@ fun MeusVeiculosScreen(
 
                     Text(
                         text = "Os Meus ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Veículos",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
 
@@ -111,7 +114,7 @@ fun MeusVeiculosScreen(
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -184,7 +187,7 @@ fun MeusVeiculosScreen(
 
                     Text(
                         text = "+",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 36.sp,
                         fontWeight = FontWeight.ExtraLight
                     )
@@ -211,7 +214,7 @@ fun VeiculoItemCard(veiculo: VeiculoInfo) {
             ) {
                 Text(
                     text = "${veiculo.marca} ${veiculo.modelo}",
-                    color = Color(0xFFFFA500),
+                    color = Color(0xFFFFBD49),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -236,7 +239,7 @@ fun VeiculoItemCard(veiculo: VeiculoInfo) {
                     modifier = Modifier
                         .size(75.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFFFA500))
+                        .background(Color(0xFFFFBD49))
                 )
 
                 Spacer(modifier = Modifier.width(24.dp))
@@ -250,7 +253,7 @@ fun VeiculoItemCard(veiculo: VeiculoInfo) {
                         Text(text = "Matrícula", color = Color.White, fontSize = 13.sp)
                         Text(
                             text = veiculo.matricula,
-                            color = Color(0xFFFFA500),
+                            color = Color(0xFFFFBD49),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -271,7 +274,7 @@ fun VeiculoItemCard(veiculo: VeiculoInfo) {
                         Text(text = "Ano", color = Color.White, fontSize = 13.sp)
                         Text(
                             text = veiculo.ano,
-                            color = Color(0xFFFFA500),
+                            color = Color(0xFFFFBD49),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -290,7 +293,7 @@ fun VeiculoItemCard(veiculo: VeiculoInfo) {
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.width(16.dp))
-                Text(text = veiculo.kms, color = Color(0xFFFFA500), fontSize = 13.sp)
+                Text(text = veiculo.kms, color = Color(0xFFFFBD49), fontSize = 13.sp)
             }
         }
     }

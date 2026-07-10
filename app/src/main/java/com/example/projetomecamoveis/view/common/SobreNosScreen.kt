@@ -56,9 +56,9 @@ fun SobreNosScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.logotipoprototipo),
+                painter = painterResource(id = R.drawable.logotipo_completo),
                 contentDescription = "Logo",
-                modifier = Modifier.size(135.dp)
+                modifier = Modifier.size(150.dp)
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -70,7 +70,7 @@ fun SobreNosScreen(navController: NavController) {
 
                 Text(
                     text = "Sobre ",
-                    color = Color(0xFFFFA500),
+                    color = Color(0xFFFFBD49),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 
 
 // ─────────────────────────────────────────────
@@ -53,7 +54,7 @@ fun MenuScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logotipoprototipo),
+                painter = painterResource(id = R.drawable.logotipo_completo),
                 contentDescription = "Logo",
                 modifier = Modifier.size(150.dp)
             )
@@ -118,14 +119,15 @@ fun BotaoMenu(texto: String, onClick: () -> Unit) {
             .height(52.dp),
         shape = RoundedCornerShape(50.dp), // forma de pílula
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFFA500) // laranja/dourado
+            containerColor = Color(0xFFFFBD49) // laranja/dourado
         )
     ) {
         Text(
             text = texto,
             color = Color.Black,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            fontFamily = LexendFontFamily
         )
     }
 }

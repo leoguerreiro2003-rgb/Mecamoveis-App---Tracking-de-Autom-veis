@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.VeiculoViewModel
 
 @Composable
@@ -86,16 +87,18 @@ fun NovoVeiculoScreen(
                 Row {
                     Text(
                         text = "Novo ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Veículo",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                 }
@@ -103,7 +106,7 @@ fun NovoVeiculoScreen(
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -179,7 +182,8 @@ fun NovoVeiculoScreen(
                             text = "Criar",
                             color = Color.White,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = LexendFontFamily
                         )
                     }
                 }
@@ -223,7 +227,7 @@ fun NovoVeiculoCampoTexto(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFF3D3D3D),
                 unfocusedContainerColor = Color(0xFF3D3D3D),
-                focusedBorderColor = Color(0xFFFFA500),
+                focusedBorderColor = Color(0xFFFFBD49),
                 unfocusedBorderColor = Color(0xFF555454), // Cor da borda quando não focado
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,

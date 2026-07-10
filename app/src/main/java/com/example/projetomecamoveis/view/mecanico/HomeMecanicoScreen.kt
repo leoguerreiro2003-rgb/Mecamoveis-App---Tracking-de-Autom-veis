@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 
 @Composable
 fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
@@ -37,7 +38,7 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
 
-        ) {
+            ) {
             Spacer(modifier = Modifier.height(30.dp))
 
             Row(
@@ -57,19 +58,20 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
                 }
 
                 Row {
-                    Text(text = "Olá, ", color = Color(0xFFFFA500), fontSize = 18.sp)
+                    Text(text = "Olá, ", color = Color(0xFFFFBD49), fontSize = 18.sp)
                     Text(
                         text = "$primeiroNome!",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
                 }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -77,7 +79,7 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
             Spacer(modifier = Modifier.height(40.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.logotipoprototipo),
+                painter = painterResource(id = R.drawable.logotipo_completo),
                 contentDescription = "Logo",
                 modifier = Modifier.size(150.dp)
             )
@@ -113,13 +115,14 @@ fun HomeMecanicoMenuButton(text: String, onClick: () -> Unit) {
             .fillMaxWidth()
             .height(52.dp),
         shape = RoundedCornerShape(50.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFBD49))
     ) {
         Text(
             text = text,
             color = Color.Black,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            fontFamily = LexendFontFamily
         )
     }
 }

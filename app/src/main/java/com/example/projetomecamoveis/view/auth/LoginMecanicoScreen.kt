@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -24,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.LoginMecanicoViewModel
 
 @Composable
@@ -59,7 +61,7 @@ fun LoginMecanicoCampoTexto(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFF3D3D3D),
                 unfocusedContainerColor = Color(0xFF3D3D3D),
-                focusedBorderColor = Color(0xFFFFA500),
+                focusedBorderColor = Color(0xFFFFBD49),
                 unfocusedBorderColor = Color(0xFF555454),
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,
@@ -124,9 +126,10 @@ fun LoginMecanicoScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.logotipoprototipo),
+                painter = painterResource(id = R.drawable.logotipo_completo),
                 contentDescription = "Logo",
-                modifier = Modifier.size(135.dp)
+                modifier = Modifier.size(150.dp),
+                contentScale = ContentScale.Inside
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -135,7 +138,7 @@ fun LoginMecanicoScreen(
 
                 Text(
                     text = "Login ",
-                    color = Color(0xFFFFA500),
+                    color = Color(0xFFFFBD49),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -198,13 +201,14 @@ fun LoginMecanicoScreen(
                     .fillMaxWidth()
                     .height(52.dp),
                 shape = RoundedCornerShape(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFBD49))
             ) {
                 Text(
                     text = "Entrar",
                     color = Color.Black,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LexendFontFamily
                 )
             }
 

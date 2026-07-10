@@ -29,7 +29,8 @@ class OrcamentoViewModel(application: Application) : AndroidViewModel(applicatio
         return dao.getOrcamentosByCliente(clienteId)
     }
 
-    fun getOrcamentosDetalhadosByCliente(clienteId: Int) = dao.getOrcamentosDetalhadosByCliente(clienteId)
+    fun getOrcamentosDetalhadosByCliente(clienteId: Int) =
+        dao.getOrcamentosDetalhadosByCliente(clienteId)
 
     fun carregarVeiculos(clienteId: Int) {
         viewModelScope.launch {

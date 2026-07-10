@@ -43,14 +43,14 @@ fun SplashScreen(navController: NavController) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
-                painter = painterResource(id = R.drawable.logotipoprototipo),
+                painter = painterResource(id = R.drawable.logotipo_completo),
                 contentDescription = "Logo",
                 modifier = Modifier.size(150.dp)
             )
             Spacer(modifier = Modifier.height(24.dp))
             // Spinner animado em laranja — mesmo esquema de cores da app
             CircularProgressIndicator(
-                color = Color(0xFFFFA500),
+                color = Color(0xFFFFBD49),
                 strokeWidth = 4.dp,
                 modifier = Modifier.size(40.dp)
             )

@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.ReparacaoComCliente
 import com.example.projetomecamoveis.model.ReparacaoInfo
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.ReparacaoViewModel
 
 @Composable
@@ -105,23 +106,25 @@ fun HistoricoReparacoesMecanicoScreen(
 
                     Text(
                         text = "Histórico de ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Reparações",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
                 }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -193,7 +196,7 @@ fun ReparacaoMecanicoPremiumCard(
                 ) {
                     Text(
                         text = "Reparação ${r.marca}",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -202,7 +205,7 @@ fun ReparacaoMecanicoPremiumCard(
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = "Eliminar",
-                            tint = Color(0xFFFFA500)
+                            tint = Color(0xFFFFBD49)
                         )
                     }
                 }
@@ -228,7 +231,7 @@ fun ReparacaoMecanicoPremiumCard(
 
                     Column {
                         Text(text = "Peças Utilizadas", color = Color.White, fontSize = 13.sp)
-                        Text(text = r.pecasUtilizadas, color = Color(0xFFFFA500), fontSize = 13.sp)
+                        Text(text = r.pecasUtilizadas, color = Color(0xFFFFBD49), fontSize = 13.sp)
                     }
 
                     HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
@@ -265,7 +268,7 @@ fun HistoricoMecanicoLinha(label: String, valor: String) {
         Text(text = label, color = Color.White, fontSize = 13.sp)
         Text(
             text = valor,
-            color = Color(0xFFFFA500),
+            color = Color(0xFFFFBD49),
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold
         )

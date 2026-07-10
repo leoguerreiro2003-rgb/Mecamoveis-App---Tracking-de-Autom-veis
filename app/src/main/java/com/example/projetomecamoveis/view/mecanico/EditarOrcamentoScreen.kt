@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.ReparacaoInfo
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.LoginClienteViewModel
 import com.example.projetomecamoveis.viewmodel.OrcamentoViewModel
 
@@ -116,8 +117,9 @@ fun EditarOrcamentoScreen(
                 Text(
                     text = "Selecionar Cliente",
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
-                )
+                    fontWeight = FontWeight.Bold,
+
+                    )
             },
             text = {
                 Column(
@@ -145,7 +147,7 @@ fun EditarOrcamentoScreen(
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold
                             )
-                            Text(text = cliente.email, color = Color(0xFFFFA500), fontSize = 12.sp)
+                            Text(text = cliente.email, color = Color(0xFFFFBD49), fontSize = 12.sp)
                         }
                         HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f))
                     }
@@ -155,7 +157,7 @@ fun EditarOrcamentoScreen(
                 TextButton(onClick = { showClienteDialog = false }) {
                     Text(
                         "Fechar",
-                        color = Color(0xFFFFA500)
+                        color = Color(0xFFFFBD49)
                     )
                 }
             },
@@ -198,7 +200,7 @@ fun EditarOrcamentoScreen(
                             )
                             Text(
                                 text = veiculo.matricula,
-                                color = Color(0xFFFFA500),
+                                color = Color(0xFFFFBD49),
                                 fontSize = 12.sp
                             )
                         }
@@ -210,7 +212,7 @@ fun EditarOrcamentoScreen(
                 TextButton(onClick = { showVeiculoDialog = false }) {
                     Text(
                         "Fechar",
-                        color = Color(0xFFFFA500)
+                        color = Color(0xFFFFBD49)
                     )
                 }
             },
@@ -269,7 +271,7 @@ fun EditarOrcamentoScreen(
                             )
                             Text(
                                 text = "Estado: ${reparacao.estado} | nº ${reparacao.numeroReparacao}",
-                                color = Color(0xFFFFA500),
+                                color = Color(0xFFFFBD49),
                                 fontSize = 12.sp
                             )
                         }
@@ -281,7 +283,7 @@ fun EditarOrcamentoScreen(
                 TextButton(onClick = { showReparacaoDialog = false }) {
                     Text(
                         "Fechar",
-                        color = Color(0xFFFFA500)
+                        color = Color(0xFFFFBD49)
                     )
                 }
             },
@@ -322,16 +324,18 @@ fun EditarOrcamentoScreen(
                 Row {
                     Text(
                         text = "Editar ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Orçamento",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                 }
@@ -339,7 +343,7 @@ fun EditarOrcamentoScreen(
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -423,7 +427,8 @@ fun EditarOrcamentoScreen(
                             text = "Atualizar",
                             color = Color.White,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = LexendFontFamily
                         )
                     }
                 }
@@ -506,7 +511,7 @@ fun EditarOrcamentoCampoSimples(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFF3D3D3D),
                 unfocusedContainerColor = Color(0xFF3D3D3D),
-                focusedBorderColor = Color(0xFFFFA500),
+                focusedBorderColor = Color(0xFFFFBD49),
                 unfocusedBorderColor = Color(0xFF555454),
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White

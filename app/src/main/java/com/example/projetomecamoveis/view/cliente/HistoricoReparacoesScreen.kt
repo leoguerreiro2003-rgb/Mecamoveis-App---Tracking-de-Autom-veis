@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.ReparacaoInfo
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.ReparacaoViewModel
 
 @Composable
@@ -75,16 +76,18 @@ fun HistoricoReparacoesScreen(
 
                     Text(
                         text = "Histórico de ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Reparações",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                 }
@@ -92,7 +95,7 @@ fun HistoricoReparacoesScreen(
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -156,7 +159,7 @@ fun ReparacaoCard(reparacao: ReparacaoInfo) {
                 // Título da Reparação
                 Text(
                     text = reparacao.titulo,
-                    color = Color(0xFFFFA500),
+                    color = Color(0xFFFFBD49),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -180,7 +183,7 @@ fun ReparacaoCard(reparacao: ReparacaoInfo) {
                         Text(text = "Peças Utilizadas", color = Color.White, fontSize = 13.sp)
                         Text(
                             text = reparacao.pecasUtilizadas,
-                            color = Color(0xFFFFA500),
+                            color = Color(0xFFFFBD49),
                             fontSize = 13.sp
                         )
                     }
@@ -219,7 +222,7 @@ fun HistoricoLinhaInfo(label: String, valor: String) {
         Text(text = label, color = Color.White, fontSize = 13.sp)
         Text(
             text = valor,
-            color = Color(0xFFFFA500),
+            color = Color(0xFFFFBD49),
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold
         )

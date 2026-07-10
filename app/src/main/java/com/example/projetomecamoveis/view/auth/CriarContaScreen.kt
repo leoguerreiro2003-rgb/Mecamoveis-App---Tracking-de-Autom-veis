@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -29,6 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.CriarContaClienteViewModel
 import com.example.projetomecamoveis.viewmodel.LoginClienteViewModel
 
@@ -100,9 +102,10 @@ fun CriarContaClienteScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.logotipoprototipo),
+                painter = painterResource(id = R.drawable.logotipo_completo),
                 contentDescription = "Logo",
-                modifier = Modifier.size(135.dp)
+                modifier = Modifier.size(150.dp),
+                contentScale = ContentScale.Inside
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -110,15 +113,17 @@ fun CriarContaClienteScreen(
             Row {
                 Text(
                     text = "Criação de Conta:  ",
-                    color = Color(0xFFFFA500),
+                    color = Color(0xFFFFBD49),
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LexendFontFamily
                 )
                 Text(
                     text = "Cliente",
                     color = Color.White,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LexendFontFamily
                 )
             }
 
@@ -202,7 +207,7 @@ fun CriarContaClienteScreen(
                         ) { append("Já tem conta? ") }
                         withStyle(
                             style = SpanStyle(
-                                color = Color(0xFFFFA500),
+                                color = Color(0xFFFFBD49),
                                 fontSize = 14.sp,
                                 textDecoration = TextDecoration.Underline
                             )
@@ -213,7 +218,6 @@ fun CriarContaClienteScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Botão de criar conta — delega toda a lógica ao ViewModel
             Button(
                 onClick = {
                     criarViewModel.validarECriarCliente(
@@ -226,13 +230,14 @@ fun CriarContaClienteScreen(
                     .fillMaxWidth()
                     .height(60.dp),
                 shape = RoundedCornerShape(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFBD49))
             ) {
                 Text(
                     text = "Criar Conta de Cliente",
                     color = Color.Black,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LexendFontFamily
                 )
             }
 
@@ -256,18 +261,25 @@ fun CriarContaCampoTexto(
             text = label,
             color = Color.White,
             fontSize = 14.sp,
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.padding(start = 16.dp),
+            fontFamily = LexendFontFamily
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = valor,
             onValueChange = onValorMuda,
-            placeholder = { Text(text = placeholder, color = Color(0xFF888888)) },
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    color = Color(0xFF888888),
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(55.dp),
             shape = RoundedCornerShape(28.dp),
             singleLine = true,
+            textStyle = LocalTextStyle.current.copy(fontFamily = LexendFontFamily),
             // Se esconderTexto for true usa PasswordVisualTransformation, caso contrário mostra o texto normal
             visualTransformation = if (esconderTexto) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
@@ -275,7 +287,7 @@ fun CriarContaCampoTexto(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFF3D3D3D),
                 unfocusedContainerColor = Color(0xFF3D3D3D),
-                focusedBorderColor = Color(0xFFFFA500),
+                focusedBorderColor = Color(0xFFFFBD49),
                 unfocusedBorderColor = Color(0xFF555454), // Cor da borda quando não focado
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,

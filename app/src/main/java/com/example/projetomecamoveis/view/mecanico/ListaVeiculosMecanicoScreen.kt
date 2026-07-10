@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.model.VeiculoComCliente
 import com.example.projetomecamoveis.model.VeiculoInfo
+import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.VeiculoViewModel
 
 @Composable
@@ -61,7 +62,7 @@ fun ListaVeiculosMecanicoScreen(
                     veiculoParaDeletar?.let { viewModel.deletarVeiculo(it) }
                     veiculoParaDeletar = null
                 }) {
-                    Text(text = "Eliminar", color = Color(0xFFFFA500), fontWeight = FontWeight.Bold)
+                    Text(text = "Eliminar", color = Color(0xFFFFBD49), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
@@ -107,23 +108,25 @@ fun ListaVeiculosMecanicoScreen(
 
                     Text(
                         text = "Ver ",
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
 
                     Text(
                         text = "Veículos",
                         color = Color.White,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = LexendFontFamily
                     )
                 }
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Perfil",
-                    tint = Color(0xFFFFA500),
+                    tint = Color(0xFFFFBD49),
                     modifier = Modifier.size(45.dp)
                 )
             }
@@ -159,7 +162,7 @@ fun ListaVeiculosMecanicoScreen(
                             .fillMaxWidth()
                             .height(70.dp),
                         shape = RoundedCornerShape(35.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFBD49))
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(text = "+", color = Color.Black, fontSize = 28.sp)
@@ -217,7 +220,7 @@ fun VeiculoMecanicoCard(
             ) {
                 Text(
                     text = "${v.marca} ${v.modelo}",
-                    color = Color(0xFFFFA500),
+                    color = Color(0xFFFFBD49),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -226,7 +229,7 @@ fun VeiculoMecanicoCard(
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Editar",
-                        tint = Color(0xFFFFA500),
+                        tint = Color(0xFFFFBD49),
                         modifier = Modifier
                             .size(22.dp)
                             .clickable { onEditClick() }
@@ -235,7 +238,7 @@ fun VeiculoMecanicoCard(
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Eliminar",
-                        tint = Color(0xFFFFA500),
+                        tint = Color(0xFFFFBD49),
                         modifier = Modifier
                             .size(22.dp)
                             .clickable { onDeleteClick() }
@@ -254,7 +257,7 @@ fun VeiculoMecanicoCard(
                     modifier = Modifier
                         .size(75.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFFFA500))
+                        .background(Color(0xFFFFBD49))
                 )
 
                 Spacer(modifier = Modifier.width(24.dp))
@@ -269,7 +272,7 @@ fun VeiculoMecanicoCard(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(text = "Proprietário", color = Color.White, fontSize = 13.sp)
-                        Text(text = item.clienteNome, color = Color(0xFFFFA500), fontSize = 13.sp)
+                        Text(text = item.clienteNome, color = Color(0xFFFFBD49), fontSize = 13.sp)
                     }
                     HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.5f), thickness = 0.5.dp)
 
@@ -281,7 +284,7 @@ fun VeiculoMecanicoCard(
                         Text(text = "Matrícula", color = Color.White, fontSize = 13.sp)
                         Text(
                             text = v.matricula,
-                            color = Color(0xFFFFA500),
+                            color = Color(0xFFFFBD49),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -305,7 +308,7 @@ fun VeiculoMecanicoCard(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text(text = v.kms, color = Color(0xFFFFA500), fontSize = 13.sp)
+                    Text(text = v.kms, color = Color(0xFFFFBD49), fontSize = 13.sp)
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -313,7 +316,7 @@ fun VeiculoMecanicoCard(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = v.ano,
-                        color = Color(0xFFFFA500),
+                        color = Color(0xFFFFBD49),
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold
                     )
