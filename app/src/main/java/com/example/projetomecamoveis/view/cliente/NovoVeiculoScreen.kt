@@ -26,9 +26,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toUpperCase
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.VeiculoViewModel
+import com.example.projetomecamoveis.util.MatriculaVisualTransformation
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 
 @Composable
 fun NovoVeiculoScreen(
@@ -44,6 +49,7 @@ fun NovoVeiculoScreen(
 
     val errorMessage by viewModel.errorMessage
     val matriculaError by viewModel.matriculaError
+    val anoError by viewModel.anoError
     val addSucesso by viewModel.addSucesso
 
     LaunchedEffect(addSucesso) {
@@ -141,26 +147,48 @@ fun NovoVeiculoScreen(
                     NovoVeiculoCampoTexto(
                         label = "Matrícula",
                         valor = matricula,
-                        onValorMuda = { matricula = it },
-                        placeholder = "Ex: AA-00-AA",
+                        onValorMuda = { input ->
+                            val cleanInput = input.toUpperCase(Locale.current).filter { it.isLetterOrDigit() }
+                            if (cleanInput.length <= 6) {
+                                matricula = cleanInput
+                            }
+                        },
+                        placeholder = "Ex: AA00AA",
                         keyboardType = KeyboardType.Text,
+                        visualTransformation = MatriculaVisualTransformation(),
                         mensagemErro = matriculaError
                     )
 
                     NovoVeiculoCampoTexto(
                         label = "Ano",
                         valor = ano,
-                        onValorMuda = { ano = it },
+                        onValorMuda = { input ->
+                            if (input.all { it.isDigit() } && input.length <= 4) {
+                                ano = input
+                            }
+                        },
                         placeholder = "Ex: 2012",
-                        keyboardType = KeyboardType.Number
+                        keyboardType = KeyboardType.Number,
+                        mensagemErro = anoError
                     )
 
                     NovoVeiculoCampoTexto(
                         label = "Contagem de KM",
                         valor = kms,
-                        onValorMuda = { kms = it },
-                        placeholder = "Ex: 100,000 km",
-                        keyboardType = KeyboardType.Text
+                        onValorMuda = { input ->
+                            val digitsOnly = input.filter { it.isDigit() }
+                            if (digitsOnly.isNotEmpty()) {
+                                val number = digitsOnly.toLong()
+                                val symbols = DecimalFormatSymbols(java.util.Locale.US)
+                                symbols.groupingSeparator = ','
+                                val formatter = DecimalFormat("#,###", symbols)
+                                kms = formatter.format(number)
+                            } else {
+                                kms = ""
+                            }
+                        },
+                        placeholder = "Ex: 1,000 km",
+                        keyboardType = KeyboardType.Number
                     )
 
                     if (errorMessage != null) {
@@ -201,6 +229,7 @@ fun NovoVeiculoCampoTexto(
     placeholder: String,
     keyboardType: KeyboardType,
     esconderTexto: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     mensagemErro: String? = null
 ) {
     Column {
@@ -220,8 +249,10 @@ fun NovoVeiculoCampoTexto(
                 .height(55.dp),
             shape = RoundedCornerShape(28.dp),
             singleLine = true,
-            // Se esconderTexto for true usa PasswordVisualTransformation, caso contrário mostra o texto normal
-            visualTransformation = if (esconderTexto) PasswordVisualTransformation() else VisualTransformation.None,
+            // Prioridade para visualTransformation passada, senão usa Password se esconderTexto for true
+            visualTransformation = if (visualTransformation != VisualTransformation.None) visualTransformation 
+                                   else if (esconderTexto) PasswordVisualTransformation() 
+                                   else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             isError = mensagemErro != null,
             colors = OutlinedTextFieldDefaults.colors(

@@ -14,6 +14,7 @@ import com.example.projetomecamoveis.view.auth.CriarContaClienteScreen
 import com.example.projetomecamoveis.view.cliente.HomeClienteScreen
 import com.example.projetomecamoveis.view.cliente.MeusVeiculosScreen
 import com.example.projetomecamoveis.view.cliente.NovoVeiculoScreen
+import com.example.projetomecamoveis.view.cliente.EditarVeiculoClienteScreen
 import com.example.projetomecamoveis.view.cliente.HistoricoReparacoesScreen
 import com.example.projetomecamoveis.view.cliente.HistoricoOrcamentosScreen
 import com.example.projetomecamoveis.view.cliente.DetalhesEstadoReparacaoScreen
@@ -80,6 +81,10 @@ fun AppNavigation() {
         composable("novo_veiculo/{clienteId}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("clienteId")?.toIntOrNull() ?: 0
             NovoVeiculoScreen(navController, id)
+        }
+        composable("editar_veiculo_cliente/{veiculoId}") { backStackEntry ->
+            val veiculoId = backStackEntry.arguments?.getString("veiculoId")?.toIntOrNull() ?: 0
+            EditarVeiculoClienteScreen(navController, veiculoId)
         }
         composable("historico_reparacoes/{clienteId}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("clienteId")?.toIntOrNull() ?: 0

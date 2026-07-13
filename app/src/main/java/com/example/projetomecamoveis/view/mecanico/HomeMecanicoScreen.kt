@@ -25,6 +25,14 @@ import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 
 @Composable
 fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
+    HomeMecanicoContent(
+        navController = navController,
+        mecanicoNome = mecanicoNome
+    )
+}
+
+@Composable
+fun HomeMecanicoContent(navController: NavHostController, mecanicoNome: String) {
     val primeiroNome = mecanicoNome.trim().split(" ").firstOrNull() ?: mecanicoNome
 
     Box(
@@ -105,6 +113,12 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
             HomeMecanicoMenuButton(text = "Gerir Prazos") { /* Navegar */ }
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewHomeMecanico() {
+    HomeMecanicoContent(navController = rememberNavController(), mecanicoNome = "José")
 }
 
 @Composable

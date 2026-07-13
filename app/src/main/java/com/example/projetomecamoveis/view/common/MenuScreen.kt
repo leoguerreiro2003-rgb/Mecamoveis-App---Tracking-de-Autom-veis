@@ -104,6 +104,12 @@ fun MenuScreen(navController: NavController) {
     }
 }
 
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewMenu() {
+    MenuScreen(navController = rememberNavController())
+}
+
 // ─────────────────────────────────────────────
 // COMPONENTE REUTILIZÁVEL — Botão dourado do menu
 // Usado em todos os botões do MenuScreen

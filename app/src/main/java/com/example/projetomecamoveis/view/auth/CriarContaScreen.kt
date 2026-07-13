@@ -46,19 +46,11 @@ fun CriarContaClienteScreen(
     criarViewModel: CriarContaClienteViewModel = viewModel(),
     loginViewModel: LoginClienteViewModel = viewModel()
 ) {
-
-    // Estados locais dos campos de texto — só vivem enquanto este ecrã está ativo
-    var nome by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var contacto by remember { mutableStateOf("") }
-    var dataNascimento by remember { mutableStateOf("") }
-    var palavraPasse by remember { mutableStateOf("") }
-    var confirmarPalavraPasse by remember { mutableStateOf("") }
-
     // Observa as mensagens de erro do ViewModel
     val errorMessage by criarViewModel.errorMessage
     val emailError by criarViewModel.emailError
     val contactoError by criarViewModel.contactoError
+    val dataNascimentoError by criarViewModel.dataNascimentoError
     val passwordError by criarViewModel.passwordError
 
     // Observa o estado de sucesso — quando true, navega para o login
@@ -73,6 +65,39 @@ fun CriarContaClienteScreen(
             }
         }
     }
+
+    CriarContaClienteContent(
+        navController = navController,
+        errorMessage = errorMessage,
+        emailError = emailError,
+        contactoError = contactoError,
+        dataNascimentoError = dataNascimentoError,
+        passwordError = passwordError,
+        onCriarClick = { n, e, c, d, p, cp ->
+            criarViewModel.validarECriarCliente(n, e, c, d, p, cp) { novoCliente ->
+                loginViewModel.adicionarCliente(novoCliente)
+            }
+        }
+    )
+}
+
+@Composable
+fun CriarContaClienteContent(
+    navController: NavController,
+    errorMessage: String?,
+    emailError: String?,
+    contactoError: String?,
+    dataNascimentoError: String?,
+    passwordError: String?,
+    onCriarClick: (String, String, String, String, String, String) -> Unit
+) {
+    // Estados locais dos campos de texto — só vivem enquanto este ecrã está ativo
+    var nome by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var contacto by remember { mutableStateOf("") }
+    var dataNascimento by remember { mutableStateOf("") }
+    var palavraPasse by remember { mutableStateOf("") }
+    var confirmarPalavraPasse by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -165,8 +190,9 @@ fun CriarContaClienteScreen(
                         label = "Data de Nascimento",
                         valor = dataNascimento,
                         onValorMuda = { dataNascimento = it },
-                        placeholder = "Ex: 11/05/2001",
-                        keyboardType = KeyboardType.Number
+                        placeholder = "Ex: 22/11/2006",
+                        keyboardType = KeyboardType.Number,
+                        mensagemErro = dataNascimentoError
                     )
                     CriarContaCampoTexto(
                         label = "Palavra Passe",
@@ -188,7 +214,7 @@ fun CriarContaClienteScreen(
 
                     // Mensagem de erro geral (ex: campos vazios)
                     if (errorMessage != null) {
-                        Text(text = errorMessage!!, color = Color.Red, fontSize = 13.sp)
+                        Text(text = errorMessage, color = Color.Red, fontSize = 13.sp)
                     }
                 }
             }
@@ -220,11 +246,7 @@ fun CriarContaClienteScreen(
 
             Button(
                 onClick = {
-                    criarViewModel.validarECriarCliente(
-                        nome, email, contacto, dataNascimento, palavraPasse, confirmarPalavraPasse
-                    ) { novoCliente ->
-                        loginViewModel.adicionarCliente(novoCliente)
-                    }
+                    onCriarClick(nome, email, contacto, dataNascimento, palavraPasse, confirmarPalavraPasse)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -244,6 +266,20 @@ fun CriarContaClienteScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewCriarContaCliente() {
+    CriarContaClienteContent(
+        navController = rememberNavController(),
+        errorMessage = null,
+        emailError = null,
+        contactoError = null,
+        dataNascimentoError = null,
+        passwordError = null,
+        onCriarClick = { _, _, _, _, _, _ -> }
+    )
 }
 
 @Composable

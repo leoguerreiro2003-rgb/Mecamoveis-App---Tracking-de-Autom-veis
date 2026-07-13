@@ -88,16 +88,32 @@ fun LoginMecanicoCampoTexto(
 @Composable
 fun LoginMecanicoScreen(
     navController: NavController,
-    viewModel: LoginMecanicoViewModel = viewModel() // ViewModel injetado
+    viewModel: LoginMecanicoViewModel = viewModel()
 ) {
+    val errorMessage by viewModel.errorMessage
 
-    // Estados locais dos campos — apenas para o que o utilizador está a escrever
+    LoginMecanicoContent(
+        navController = navController,
+        errorMessage = errorMessage,
+        onLoginClick = { email, pass ->
+            viewModel.verificarLoginMecanico(email, pass) { mecanico ->
+                if (mecanico != null) {
+                    val nome = mecanico.nome.trim().split(" ").firstOrNull() ?: mecanico.nome
+                    navController.navigate("home_mecanico/$nome")
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun LoginMecanicoContent(
+    navController: NavController,
+    errorMessage: String?,
+    onLoginClick: (String, String) -> Unit
+) {
     var email by remember { mutableStateOf("") }
     var palavraPasse by remember { mutableStateOf("") }
-
-    // Observa a mensagem de erro do ViewModel
-    // Se o ViewModel atualizar errorMessage, a UI redesenha automaticamente
-    val errorMessage by viewModel.errorMessage
 
     Box(
         modifier = Modifier
@@ -135,14 +151,12 @@ fun LoginMecanicoScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Row {
-
                 Text(
                     text = "Login ",
                     color = Color(0xFFFFBD49),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
-
                 Text(
                     text = "Mecânico",
                     color = Color.White,
@@ -159,7 +173,6 @@ fun LoginMecanicoScreen(
                     .padding(horizontal = 24.dp, vertical = 28.dp)
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-
                     LoginMecanicoCampoTexto(
                         label = "Email",
                         valor = email,
@@ -167,7 +180,6 @@ fun LoginMecanicoScreen(
                         placeholder = "Ex: contactomecanico@gmail.com",
                         keyboardType = KeyboardType.Email
                     )
-
                     LoginMecanicoCampoTexto(
                         label = "Palavra-Passe",
                         valor = palavraPasse,
@@ -176,27 +188,16 @@ fun LoginMecanicoScreen(
                         keyboardType = KeyboardType.Password,
                         esconderTexto = true
                     )
-
-                    // Mostra mensagem de erro se o login falhar
                     if (errorMessage != null) {
-                        Text(text = errorMessage!!, color = Color.Red, fontSize = 13.sp)
+                        Text(text = errorMessage, color = Color.Red, fontSize = 13.sp)
                     }
                 }
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Botão de entrada
             Button(
-                onClick = {
-                    viewModel.verificarLoginMecanico(email, palavraPasse) { mecanico ->
-                        if (mecanico != null) {
-                            val nome =
-                                mecanico.nome.trim().split(" ").firstOrNull() ?: mecanico.nome
-                            navController.navigate("home_mecanico/$nome")
-                        }
-                    }
-                },
+                onClick = { onLoginClick(email, palavraPasse) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -211,10 +212,19 @@ fun LoginMecanicoScreen(
                     fontFamily = LexendFontFamily
                 )
             }
-
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewLoginMecanico() {
+    LoginMecanicoContent(
+        navController = rememberNavController(),
+        errorMessage = null,
+        onLoginClick = { _, _ -> }
+    )
 }
 
 

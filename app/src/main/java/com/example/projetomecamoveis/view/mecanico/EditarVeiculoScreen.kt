@@ -25,10 +25,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toUpperCase
 import com.example.projetomecamoveis.R
 import com.example.projetomecamoveis.ui.theme.LexendFontFamily
 import com.example.projetomecamoveis.viewmodel.LoginClienteViewModel
 import com.example.projetomecamoveis.viewmodel.VeiculoViewModel
+import com.example.projetomecamoveis.util.MatriculaVisualTransformation
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 
 @Composable
 fun EditarVeiculoScreen(
@@ -51,13 +57,15 @@ fun EditarVeiculoScreen(
     val todosClientes by clienteViewModel.todosClientes.collectAsState(initial = emptyList())
     val addSucesso by viewModel.addSucesso
     val errorMessage by viewModel.errorMessage
+    val matriculaError by viewModel.matriculaError
+    val anoError by viewModel.anoError
 
     // Carregar dados originais
     LaunchedEffect(veiculoOriginal) {
         veiculoOriginal?.let { v ->
             marca = v.marca
             modelo = v.modelo
-            matricula = v.matricula
+            matricula = v.matricula.replace("-", "")
             ano = v.ano
             kms = v.kms
             clienteIdSelecionado = v.clienteId
@@ -211,18 +219,41 @@ fun EditarVeiculoScreen(
                     CampoEdicao(
                         label = "Matrícula",
                         valor = matricula,
-                        placeholder = "Ex: AA-00-AA",
-                        onValueChange = { matricula = it })
+                        placeholder = "Ex: AA00AA",
+                        visualTransformation = MatriculaVisualTransformation(),
+                        onValueChange = { input ->
+                            val cleanInput = input.toUpperCase(Locale.current).filter { it.isLetterOrDigit() }
+                            if (cleanInput.length <= 6) {
+                                matricula = cleanInput
+                            }
+                        },
+                        mensagemErro = matriculaError)
                     CampoEdicao(
                         label = "Ano",
                         valor = ano,
                         placeholder = "Ex: 2012",
-                        onValueChange = { ano = it })
+                        onValueChange = { input ->
+                            if (input.all { it.isDigit() } && input.length <= 4) {
+                                ano = input
+                            }
+                        },
+                        mensagemErro = anoError)
                     CampoEdicao(
                         label = "Contagem de KM",
                         valor = kms,
-                        placeholder = "Ex: 100,000 km",
-                        onValueChange = { kms = it })
+                        placeholder = "Ex: 1,000 km",
+                        onValueChange = { input ->
+                            val digitsOnly = input.filter { it.isDigit() }
+                            if (digitsOnly.isNotEmpty()) {
+                                val number = digitsOnly.toLong()
+                                val symbols = DecimalFormatSymbols(java.util.Locale.US)
+                                symbols.groupingSeparator = ','
+                                val formatter = DecimalFormat("#,###", symbols)
+                                kms = formatter.format(number)
+                            } else {
+                                kms = ""
+                            }
+                        })
 
                     // Seleção de Cliente
                     Column(modifier = Modifier.fillMaxWidth()) {
@@ -277,9 +308,11 @@ fun EditarVeiculoScreen(
 
                     TextButton(
                         onClick = {
-                            viewModel.editarVeiculo(
-                                veiculoId, clienteIdSelecionado, marca, modelo, matricula, ano, kms
-                            )
+                            if (viewModel.validarDadosVeiculo(marca, modelo, matricula, ano, kms)) {
+                                viewModel.editarVeiculo(
+                                    veiculoId, clienteIdSelecionado, marca, modelo, matricula, ano, kms
+                                )
+                            }
                         },
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
@@ -303,7 +336,9 @@ fun CampoEdicao(
     label: String,
     valor: String,
     placeholder: String,
-    onValueChange: (String) -> Unit
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    onValueChange: (String) -> Unit,
+    mensagemErro: String? = null
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -321,16 +356,28 @@ fun CampoEdicao(
                 .fillMaxWidth()
                 .height(55.dp),
             shape = RoundedCornerShape(28.dp),
+            visualTransformation = visualTransformation,
+            isError = mensagemErro != null,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFF3D3D3D),
                 unfocusedContainerColor = Color(0xFF3D3D3D),
                 focusedBorderColor = Color(0xFFFFBD49),
                 unfocusedBorderColor = Color(0xFF555454),
                 focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White
+                unfocusedTextColor = Color.White,
+                errorBorderColor = Color.Red
             ),
             singleLine = true
         )
+        if (mensagemErro != null) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = mensagemErro,
+                color = Color.Red,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
     }
 }
 

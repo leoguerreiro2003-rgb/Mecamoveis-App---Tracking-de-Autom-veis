@@ -95,6 +95,12 @@ fun ContactosScreen(
     }
 }
 
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewContactos() {
+    ContactosScreen(navController = rememberNavController())
+}
+
 // ─────────────────────────────────────────────
 // COMPONENTE — Cartão de apresentação de um mecânico
 // Recebe um MecanicoInfo e mostra os seus dados formatados

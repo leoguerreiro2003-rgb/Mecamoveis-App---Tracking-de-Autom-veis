@@ -44,6 +44,10 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
     var matriculaError = mutableStateOf<String?>(null)
         private set
 
+    // Estado de erro para o ano
+    var anoError = mutableStateOf<String?>(null)
+        private set
+
     // Estado de erro geral (campos vazios)
     var errorMessage = mutableStateOf<String?>(null)
         private set
@@ -51,6 +55,51 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
     // Estado de sucesso para navegação
     var addSucesso = mutableStateOf(false)
         private set
+
+    fun validarDadosVeiculo(
+        marca: String,
+        modelo: String,
+        matricula: String,
+        ano: String,
+        kms: String
+    ): Boolean {
+        matriculaError.value = null
+        anoError.value = null
+        errorMessage.value = null
+
+        var temErro = false
+
+        if (marca.isBlank() || modelo.isBlank() || matricula.isBlank() || ano.isBlank() || kms.isBlank()) {
+            errorMessage.value = "Por favor, preencha todos os campos."
+            temErro = true
+        }
+
+        // Validação de Formato de Matrícula (AA-00-AA)
+        val matriculaRegex = "^[A-Z]{2}[0-9]{2}[A-Z]{2}$".toRegex()
+        if (matricula.isNotBlank() && !matricula.matches(matriculaRegex)) {
+            matriculaError.value = "Formato inválido. Use 2 letras, 2 números e 2 letras (ex: AA00AA)."
+            temErro = true
+        }
+
+        val anoInt = ano.toIntOrNull()
+        val anoAtual = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+        if (ano.isNotBlank()) {
+            if (anoInt == null || anoInt > anoAtual || anoInt < 1886) {
+                anoError.value = "Ano inválido. Por favor insira um ano até $anoAtual."
+                temErro = true
+            }
+        }
+
+        return !temErro
+    }
+
+    private fun formatarMatrículaParaBD(matricula: String): String {
+        return if (matricula.length == 6) {
+            "${matricula.substring(0, 2)}-${matricula.substring(2, 4)}-${matricula.substring(4, 6)}"
+        } else {
+            matricula
+        }
+    }
 
     fun adicionarVeiculo(
         clienteId: Int,
@@ -60,15 +109,11 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
         ano: String,
         kms: String
     ) {
-        // Limpar erros
-        matriculaError.value = null
-        errorMessage.value = null
-
-        // 1. Validação de campos vazios
-        if (marca.isBlank() || modelo.isBlank() || matricula.isBlank() || ano.isBlank() || kms.isBlank()) {
-            errorMessage.value = "Por favor, preencha todos os campos."
+        if (clienteId == 0) {
+            errorMessage.value = "Por favor, selecione um cliente."
             return
         }
+        if (!validarDadosVeiculo(marca, modelo, matricula, ano, kms)) return
 
         viewModelScope.launch {
             // Verificar limite de 3 veículos
@@ -78,19 +123,19 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
                 return@launch
             }
 
-            // 2. Verificar se a matrícula já existe
+            // Verificar se a matrícula já existe
             val veiculoExistente = dao.getVeiculoByMatricula(matricula.trim())
             if (veiculoExistente != null) {
                 matriculaError.value = "essa matrícula já está ser utilizada"
                 return@launch
             }
 
-            // 3. Inserir na BD
+            // Inserir na BD
             val novoVeiculo = VeiculoInfo(
                 clienteId = clienteId,
                 marca = marca,
                 modelo = modelo,
-                matricula = matricula.trim(),
+                matricula = formatarMatrículaParaBD(matricula),
                 ano = ano,
                 kms = kms
             )
@@ -113,12 +158,11 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
         ano: String,
         kms: String
     ) {
-        errorMessage.value = null
-
-        if (marca.isBlank() || modelo.isBlank() || matricula.isBlank() || ano.isBlank() || kms.isBlank() || clienteId == 0) {
-            errorMessage.value = "Por favor, preencha todos os campos."
+        if (clienteId == 0) {
+            errorMessage.value = "Por favor, selecione um cliente."
             return
         }
+        if (!validarDadosVeiculo(marca, modelo, matricula, ano, kms)) return
 
         viewModelScope.launch {
             // Se o cliente mudou, verificar limite de 3
@@ -131,12 +175,19 @@ class VeiculoViewModel(application: Application) : AndroidViewModel(application)
                 }
             }
 
+            // Verificar se a matrícula já existe em OUTRO veículo
+            val veiculoComMesmaMatricula = dao.getVeiculoByMatricula(formatarMatrículaParaBD(matricula))
+            if (veiculoComMesmaMatricula != null && veiculoComMesmaMatricula.id != veiculoId) {
+                matriculaError.value = "esta matrícula já está a ser utilizada por outro veículo"
+                return@launch
+            }
+
             val veiculoEditado = VeiculoInfo(
                 id = veiculoId,
                 clienteId = clienteId,
                 marca = marca,
                 modelo = modelo,
-                matricula = matricula.trim(),
+                matricula = formatarMatrículaParaBD(matricula),
                 ano = ano,
                 kms = kms,
                 emReparacao = veiculoAtual?.emReparacao ?: false,

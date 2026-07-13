@@ -46,6 +46,19 @@ fun DetalhesEstadoReparacaoScreen(
     val veiculoState = viewModel.getVeiculoById(veiculoId).collectAsState(initial = null)
     val veiculo = veiculoState.value
 
+    DetalhesEstadoReparacaoContent(
+        navController = navController,
+        veiculo = veiculo,
+        clienteNome = clienteNome
+    )
+}
+
+@Composable
+fun DetalhesEstadoReparacaoContent(
+    navController: NavHostController,
+    veiculo: com.example.projetomecamoveis.model.VeiculoInfo?,
+    clienteNome: String
+) {
     val estados = listOf("Reparação Iniciada", "Em Reparação", "Revisão", "Reparação Concluída")
     val estadoAtual = veiculo?.ultimoEstado ?: "Reparação Iniciada"
 
@@ -164,6 +177,7 @@ fun DetalhesEstadoReparacaoScreen(
     }
 }
 
+
 @Composable
 fun WaveCircle(progress: Float) {
     val infiniteTransition = rememberInfiniteTransition(label = "wave")
@@ -267,9 +281,21 @@ fun TimelineItem(label: String, isAtivo: Boolean) {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewTimelineAnimated() {
-    DetalhesEstadoReparacaoScreen(
+    DetalhesEstadoReparacaoContent(
         navController = rememberNavController(),
-        veiculoId = 1,
+        veiculo = com.example.projetomecamoveis.model.VeiculoInfo(
+            id = 1,
+            clienteId = 1,
+            marca = "BMW",
+            modelo = "M3",
+            matricula = "AA-00-BB",
+            ano = "2020",
+            kms = "50000",
+            ultimoEstado = "Em Reparação",
+            dataIniciada = "10/06/2024",
+            dataEmReparacao = "12/06/2024"
+        ),
         clienteNome = "Manuel"
     )
 }
+

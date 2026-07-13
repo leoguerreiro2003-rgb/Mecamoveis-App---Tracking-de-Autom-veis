@@ -58,3 +58,9 @@ fun SplashScreen(navController: NavController) {
     }
 }
 
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewSplash() {
+    SplashScreen(navController = rememberNavController())
+}
+

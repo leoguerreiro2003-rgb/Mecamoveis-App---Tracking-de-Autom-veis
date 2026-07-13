@@ -9,6 +9,9 @@ import com.example.projetomecamoveis.data.AppDatabase
 import com.example.projetomecamoveis.model.LoginClienteInfo
 import com.example.projetomecamoveis.model.LoginMecanicoInfo
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class CriarContaClienteViewModel(application: Application) : AndroidViewModel(application) {
     
@@ -46,6 +49,8 @@ class CriarContaClienteViewModel(application: Application) : AndroidViewModel(ap
         private set
     var contactoError = mutableStateOf<String?>(null)
         private set
+    var dataNascimentoError = mutableStateOf<String?>(null)
+        private set
     var passwordError = mutableStateOf<String?>(null)
         private set
 
@@ -68,6 +73,7 @@ class CriarContaClienteViewModel(application: Application) : AndroidViewModel(ap
         errorMessage.value = null
         emailError.value = null
         contactoError.value = null
+        dataNascimentoError.value = null
         passwordError.value = null
 
         var localHasError = false
@@ -78,13 +84,55 @@ class CriarContaClienteViewModel(application: Application) : AndroidViewModel(ap
             localHasError = true
         }
 
-        // 2. Validação básica de email (deve conter @ e .)
-        if (email.isNotBlank() && (!email.contains("@") || !email.contains("."))) {
-            emailError.value = "Email inválido."
+        // 2. Validação específica de email (deve conter @gmail.com)
+        if (email.isNotBlank() && !email.lowercase().endsWith("@gmail.com")) {
+            emailError.value = "O email deve conter @gmail.com."
             localHasError = true
         }
 
-        // 3. Verificar se as passwords coincidem
+        // 3. Validação de Contacto (9 dígitos, começa com 96 ou 92, sem espaços)
+        val contactoLimpo = contacto.trim()
+        if (contactoLimpo.isNotBlank()) {
+            val phoneRegex = "^(96|92)[0-9]{7}$".toRegex()
+            if (!contactoLimpo.matches(phoneRegex)) {
+                contactoError.value = "Número inválido. Deve ter 9 dígitos e começar por 96 ou 92."
+                localHasError = true
+            }
+        }
+
+        // 4. Validação de Data de Nascimento
+        if (dataNascimento.isNotBlank()) {
+            val dateRegex = "^[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}$".toRegex()
+            if (!dataNascimento.matches(dateRegex)) {
+                dataNascimentoError.value = "Formato inválido. Use dia/mes/ano (ex: 22/11/2006)."
+                localHasError = true
+            } else {
+                val parts = dataNascimento.split("/")
+                val day = parts[0]
+                val month = parts[1]
+
+                // Validação de dígitos do dia (não pode ser 01, tem que ser 1)
+                if (day.startsWith("0") && day.length == 2) {
+                    dataNascimentoError.value = "O dia não pode começar por 0 (ex: use 1 em vez de 01)."
+                    localHasError = true
+                } else {
+                    try {
+                        val sdf = SimpleDateFormat("d/M/yyyy", Locale.getDefault())
+                        sdf.isLenient = false
+                        val date = sdf.parse(dataNascimento)
+                        if (date == null || date.after(Date())) {
+                            dataNascimentoError.value = "Data de nascimento inválida ou futura."
+                            localHasError = true
+                        }
+                    } catch (e: Exception) {
+                        dataNascimentoError.value = "Data inexistente."
+                        localHasError = true
+                    }
+                }
+            }
+        }
+
+        // 5. Verificar se as passwords coincidem
         if (palavraPasse.isNotBlank() && confirmarPalavraPasse.isNotBlank() && palavraPasse != confirmarPalavraPasse) {
             passwordError.value = "As palavras-passe não coincidem."
             localHasError = true
@@ -96,7 +144,7 @@ class CriarContaClienteViewModel(application: Application) : AndroidViewModel(ap
         viewModelScope.launch {
             var dbHasError = false
             
-            // 4. Verificar duplicados na Base de Dados - Fazemos todos sem dar 'return' para mostrar todos de uma vez
+            // 6. Verificar duplicados na Base de Dados
             
             // Email
             val emailExistente = dao.getClienteByEmail(email.trim())
@@ -106,11 +154,8 @@ class CriarContaClienteViewModel(application: Application) : AndroidViewModel(ap
             }
 
             // Contacto
-            val contactoInt = contacto.replace(" ", "").toIntOrNull()
-            if (contactoInt == null) {
-                contactoError.value = "Número de contacto inválido."
-                dbHasError = true
-            } else {
+            val contactoInt = contactoLimpo.toIntOrNull()
+            if (contactoInt != null) {
                 val numeroExistente = dao.getClienteByNumber(contactoInt)
                 if (numeroExistente != null) {
                     contactoError.value = "esse numero ja esta ser utilizado"

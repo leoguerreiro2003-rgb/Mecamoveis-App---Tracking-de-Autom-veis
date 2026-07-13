@@ -33,12 +33,27 @@ fun HomeClienteScreen(
     clienteNome: String,
     viewModel: VeiculoViewModel = viewModel()
 ) {
-    val primeiroNome = clienteNome.trim().split(" ").firstOrNull() ?: clienteNome
-
-    var showStatusDialog by remember { mutableStateOf(false) }
     val veiculosEmReparacaoState =
         viewModel.getVeiculosEmReparacao(clienteId).collectAsState(initial = emptyList())
     val veiculosEmReparacao = veiculosEmReparacaoState.value
+
+    HomeClienteContent(
+        navController = navController,
+        clienteId = clienteId,
+        clienteNome = clienteNome,
+        veiculosEmReparacao = veiculosEmReparacao
+    )
+}
+
+@Composable
+fun HomeClienteContent(
+    navController: NavHostController,
+    clienteId: Int,
+    clienteNome: String,
+    veiculosEmReparacao: List<com.example.projetomecamoveis.model.VeiculoInfo>
+) {
+    val primeiroNome = clienteNome.trim().split(" ").firstOrNull() ?: clienteNome
+    var showStatusDialog by remember { mutableStateOf(false) }
 
     if (showStatusDialog) {
         AlertDialog(
@@ -113,7 +128,6 @@ fun HomeClienteScreen(
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -186,6 +200,7 @@ fun HomeClienteScreen(
     }
 }
 
+
 @Composable
 fun HomeClienteMenuButton(text: String, onClick: () -> Unit) {
     Button(
@@ -211,9 +226,22 @@ fun HomeClienteMenuButton(text: String, onClick: () -> Unit) {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewHomeCliente() {
-    HomeClienteScreen(
+    HomeClienteContent(
         navController = rememberNavController(),
         clienteId = 1,
-        clienteNome = "Leandro"
+        clienteNome = "Leandro",
+        veiculosEmReparacao = listOf(
+            com.example.projetomecamoveis.model.VeiculoInfo(
+                id = 1,
+                clienteId = 1,
+                marca = "Audi",
+                modelo = "A3",
+                matricula = "BB-11-CC",
+                ano = "2021",
+                kms = "30000",
+                ultimoEstado = "Em Reparação"
+            )
+        )
     )
 }
+

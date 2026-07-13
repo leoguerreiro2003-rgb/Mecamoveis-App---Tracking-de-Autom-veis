@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,11 +41,13 @@ fun MeusVeiculosScreen(
         viewModel.getVeiculosByCliente(clienteId).collectAsState(initial = emptyList())
     val veiculos = veiculosState.value
 
-    var showDialog by remember { mutableStateOf(false) }
+    var showMaxVehiclesDialog by remember { mutableStateOf(false) }
+    var showDeleteConfirmDialog by remember { mutableStateOf(false) }
+    var veiculoParaDeletar by remember { mutableStateOf<VeiculoInfo?>(null) }
 
-    if (showDialog) {
+    if (showMaxVehiclesDialog) {
         AlertDialog(
-            onDismissRequest = { showDialog = false },
+            onDismissRequest = { showMaxVehiclesDialog = false },
             title = { Text(text = "Aviso", color = Color.White, fontWeight = FontWeight.Bold) },
             text = {
                 Text(
@@ -52,8 +56,45 @@ fun MeusVeiculosScreen(
                 )
             },
             confirmButton = {
-                TextButton(onClick = { showDialog = false }) {
+                TextButton(onClick = { showMaxVehiclesDialog = false }) {
                     Text(text = "OK", color = Color(0xFFFFBD49), fontWeight = FontWeight.Bold)
+                }
+            },
+            containerColor = Color(0xFF2A2A2A)
+        )
+    }
+
+    if (showDeleteConfirmDialog && veiculoParaDeletar != null) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirmDialog = false },
+            title = {
+                Text(
+                    text = "Apagar Veículo",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "Quer mesmo apagar o veículo ${veiculoParaDeletar?.marca} ${veiculoParaDeletar?.modelo}?",
+                    color = Color.LightGray
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    veiculoParaDeletar?.let { viewModel.deletarVeiculo(it) }
+                    showDeleteConfirmDialog = false
+                    veiculoParaDeletar = null
+                }) {
+                    Text(text = "Sim", color = Color.Red, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showDeleteConfirmDialog = false
+                    veiculoParaDeletar = null
+                }) {
+                    Text(text = "Não", color = Color.White)
                 }
             },
             containerColor = Color(0xFF2A2A2A)
@@ -144,7 +185,16 @@ fun MeusVeiculosScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     veiculos.forEach { veiculo ->
-                        VeiculoItemCard(veiculo = veiculo)
+                        VeiculoItemCard(
+                            veiculo = veiculo,
+                            onEditClick = {
+                                navController.navigate("editar_veiculo_cliente/${veiculo.id}")
+                            },
+                            onDeleteClick = {
+                                veiculoParaDeletar = veiculo
+                                showDeleteConfirmDialog = true
+                            }
+                        )
                     }
                 }
             }
@@ -159,7 +209,7 @@ fun MeusVeiculosScreen(
                     .background(color = Color(0xFF333333), shape = RoundedCornerShape(35.dp))
                     .clickable {
                         if (veiculos.size >= 3) {
-                            showDialog = true
+                            showMaxVehiclesDialog = true
                         } else {
                             navController.navigate("novo_veiculo/$clienteId")
                         }
@@ -198,7 +248,11 @@ fun MeusVeiculosScreen(
 }
 
 @Composable
-fun VeiculoItemCard(veiculo: VeiculoInfo) {
+fun VeiculoItemCard(
+    veiculo: VeiculoInfo,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -206,7 +260,7 @@ fun VeiculoItemCard(veiculo: VeiculoInfo) {
             .padding(24.dp)
     ) {
         Column {
-            // Título e Ícone de Edição
+            // Título e Ícones
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -216,16 +270,33 @@ fun VeiculoItemCard(veiculo: VeiculoInfo) {
                     text = "${veiculo.marca} ${veiculo.modelo}",
                     color = Color(0xFFFFBD49),
                     fontSize = 17.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
                 )
 
-                // Ícone de Edição (Placeholder simulando o da imagem)
-                Icon(
-                    painter = painterResource(id = R.drawable.icone_editar),
-                    contentDescription = "Editar",
-                    tint = Color.White,
-                    modifier = Modifier.size(24.dp)
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Ícone de Edição
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Editar",
+                        tint = Color(0xFFFFBD49),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable { onEditClick() }
+                    )
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    // Ícone de Deletar
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Deletar",
+                        tint = Color(0xFFFFBD49),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable { onDeleteClick() }
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(12.dp))

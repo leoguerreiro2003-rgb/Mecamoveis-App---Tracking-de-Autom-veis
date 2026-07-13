@@ -36,6 +36,17 @@ fun ListaClientesScreen(
 ) {
     val clientes by viewModel.todosClientes.collectAsState(initial = emptyList())
 
+    ListaClientesContent(
+        navController = navController,
+        clientes = clientes
+    )
+}
+
+@Composable
+fun ListaClientesContent(
+    navController: NavHostController,
+    clientes: List<LoginClienteInfo>
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -126,6 +137,7 @@ fun ListaClientesScreen(
     }
 }
 
+
 @Composable
 fun ClienteCard(cliente: LoginClienteInfo) {
     Box(
@@ -158,5 +170,11 @@ fun ClienteCard(cliente: LoginClienteInfo) {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewListaClientes() {
-    ListaClientesScreen(navController = rememberNavController())
+    ListaClientesContent(
+        navController = rememberNavController(),
+        clientes = listOf(
+            LoginClienteInfo(1, "João Silva", "joao@gmail.com", 912345678, "123")
+        )
+    )
 }
+

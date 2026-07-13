@@ -10,7 +10,7 @@ import com.example.projetomecamoveis.model.VeiculoInfo
 import com.example.projetomecamoveis.model.ReparacaoInfo
 import com.example.projetomecamoveis.model.OrcamentoInfo
 
-@Database(entities = [LoginClienteInfo::class, LoginMecanicoInfo::class, VeiculoInfo::class, ReparacaoInfo::class, OrcamentoInfo::class], version = 8, exportSchema = false)
+@Database(entities = [LoginClienteInfo::class, LoginMecanicoInfo::class, VeiculoInfo::class, ReparacaoInfo::class, OrcamentoInfo::class], version = 10, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun loginClienteDao(): LoginClienteDao

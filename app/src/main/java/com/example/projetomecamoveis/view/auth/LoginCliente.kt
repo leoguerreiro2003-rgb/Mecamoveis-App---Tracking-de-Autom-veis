@@ -260,5 +260,6 @@ fun PreviewLogin() {
     LoginClienteContent(
         navController = rememberNavController(),
         errorMessage = null,
-        onLoginClick = { _, _ -> })
+        onLoginClick = { _, _ -> }
+    )
 }
