@@ -9,7 +9,7 @@ data class OrcamentoInfo(
     val id: Int = 0,
     val clienteId: Int,
     val veiculoId: Int,
-    val reparacaoId: Int?, // ID da reparação associada (opcional)
+    val reparacaoId: Int?,
     val titulo: String,
     val valor: String
 )

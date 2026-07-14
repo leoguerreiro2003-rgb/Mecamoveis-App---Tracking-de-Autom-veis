@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -191,7 +190,7 @@ fun CriarContaClienteContent(
                         valor = dataNascimento,
                         onValorMuda = { dataNascimento = it },
                         placeholder = "Ex: 22/11/2006",
-                        keyboardType = KeyboardType.Number,
+                        keyboardType = KeyboardType.Uri,
                         mensagemErro = dataNascimentoError
                     )
                     CriarContaCampoTexto(

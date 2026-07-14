@@ -42,3 +42,4 @@ class LoginMecanicoViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 }
+

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class VeiculoInfo(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val clienteId: Int, // Associado ao ID do cliente
+    val clienteId: Int,
     val marca: String,
     val modelo: String,
     val matricula: String,
