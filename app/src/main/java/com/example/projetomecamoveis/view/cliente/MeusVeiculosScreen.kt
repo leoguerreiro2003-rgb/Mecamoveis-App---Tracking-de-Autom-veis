@@ -4,12 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -305,12 +305,12 @@ fun VeiculoItemCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Círculo Laranja (Veículo)
-                Box(
-                    modifier = Modifier
-                        .size(75.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFFFBD49))
+                // Ícone de Veículo Amarelo
+                Icon(
+                    imageVector = Icons.Default.DirectionsCar,
+                    contentDescription = null,
+                    tint = Color(0xFFFFBD49),
+                    modifier = Modifier.size(75.dp)
                 )
 
                 Spacer(modifier = Modifier.width(24.dp))

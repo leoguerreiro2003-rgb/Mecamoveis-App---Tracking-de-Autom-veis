@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,9 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.toRect
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -125,8 +131,8 @@ fun DetalhesEstadoReparacaoContent(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // --- WAVE ANIMATION CIRCLE ---
-            WaveCircle(progress = progresso)
+            // --- WAVE ANIMATION CAR ---
+            WaveCar(progress = progresso)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -179,7 +185,7 @@ fun DetalhesEstadoReparacaoContent(
 
 
 @Composable
-fun WaveCircle(progress: Float) {
+fun WaveCar(progress: Float) {
     val infiniteTransition = rememberInfiniteTransition(label = "wave")
     val phase by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -191,24 +197,39 @@ fun WaveCircle(progress: Float) {
         label = "phase"
     )
 
+    val carIcon = Icons.Default.DirectionsCar
+    val vectorPainter = rememberVectorPainter(carIcon)
+
     Box(
         modifier = Modifier
-            .size(100.dp)
-            .clip(CircleShape)
-            .background(Color.Black)
-            .border(2.dp, Color(0xFFFFBD49), CircleShape),
+            .size(120.dp)
+            .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+        ) {
             val width = size.width
             val height = size.height
             val fillHeight = height * (1f - progress)
 
+            // 1. Desenhar a silhueta do carro em amarelo/laranja (fixo)
+            with(vectorPainter) {
+                this@Canvas.draw(
+                    size = size,
+                    colorFilter = ColorFilter.tint(Color(0xFFFFBD49))
+                )
+            }
+
+            // 2. Desenhar a onda PRETA (que vai "limpar" o amarelo de cima para baixo)
             val wavePath = Path().apply {
                 val waveAmplitude = 10f
                 val waveLength = width
 
-                moveTo(0f, height)
+                // A onda agora representa o VAZIO que desce
+                moveTo(0f, 0f)
                 lineTo(0f, fillHeight)
 
                 for (x in 0..width.toInt()) {
@@ -217,16 +238,16 @@ fun WaveCircle(progress: Float) {
                     lineTo(x.toFloat(), y)
                 }
 
-                lineTo(width, height)
+                lineTo(width, 0f)
                 close()
             }
 
-            clipPath(Path().apply { addOval(size.toRect()) }) {
-                drawPath(
-                    path = wavePath,
-                    color = Color(0xFFFFBD49)
-                )
-            }
+            // Usamos BlendMode.DstOut para remover o amarelo onde a onda é desenhada
+            drawPath(
+                path = wavePath,
+                color = Color.Black,
+                blendMode = BlendMode.DstOut
+            )
         }
     }
 }
@@ -298,4 +319,3 @@ fun PreviewTimelineAnimated() {
         clienteNome = "Manuel"
     )
 }
-

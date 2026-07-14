@@ -1,5 +1,6 @@
 package com.example.projetomecamoveis.view.cliente
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -54,6 +55,47 @@ fun HomeClienteContent(
 ) {
     val primeiroNome = clienteNome.trim().split(" ").firstOrNull() ?: clienteNome
     var showStatusDialog by remember { mutableStateOf(false) }
+    var showExitDialog by remember { mutableStateOf(false) }
+
+    // Interceptar botão "voltar" do sistema
+    BackHandler {
+        showExitDialog = true
+    }
+
+    if (showExitDialog) {
+        AlertDialog(
+            onDismissRequest = { showExitDialog = false },
+            title = {
+                Text(
+                    text = "Terminar Sessão",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "Deseja mesmo sair? A sua sessão será finalizada.",
+                    color = Color.LightGray
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showExitDialog = false
+                    navController.navigate("menu") {
+                        popUpTo("home_cliente") { inclusive = true }
+                    }
+                }) {
+                    Text(text = "Sair", color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExitDialog = false }) {
+                    Text(text = "Cancelar", color = Color(0xFFFFBD49))
+                }
+            },
+            containerColor = Color(0xFF2A2A2A)
+        )
+    }
 
     if (showStatusDialog) {
         AlertDialog(
@@ -139,7 +181,7 @@ fun HomeClienteContent(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = { showExitDialog = true }) {
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_left_28_regular),
                         contentDescription = "Voltar",

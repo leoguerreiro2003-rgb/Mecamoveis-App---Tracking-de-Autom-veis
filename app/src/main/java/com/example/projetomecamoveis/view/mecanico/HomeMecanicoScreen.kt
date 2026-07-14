@@ -1,5 +1,6 @@
 package com.example.projetomecamoveis.view.mecanico
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -8,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +36,47 @@ fun HomeMecanicoScreen(navController: NavHostController, mecanicoNome: String) {
 @Composable
 fun HomeMecanicoContent(navController: NavHostController, mecanicoNome: String) {
     val primeiroNome = mecanicoNome.trim().split(" ").firstOrNull() ?: mecanicoNome
+    var showExitDialog by remember { mutableStateOf(false) }
+
+    // Interceptar botão "voltar" do sistema
+    BackHandler {
+        showExitDialog = true
+    }
+
+    if (showExitDialog) {
+        AlertDialog(
+            onDismissRequest = { showExitDialog = false },
+            title = {
+                Text(
+                    text = "Terminar Sessão",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "Deseja mesmo sair? A sua sessão será finalizada.",
+                    color = Color.LightGray
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showExitDialog = false
+                    navController.navigate("menu") {
+                        popUpTo("home_mecanico") { inclusive = true }
+                    }
+                }) {
+                    Text(text = "Sair", color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExitDialog = false }) {
+                    Text(text = "Cancelar", color = Color(0xFFFFBD49))
+                }
+            },
+            containerColor = Color(0xFF2A2A2A)
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -56,7 +99,7 @@ fun HomeMecanicoContent(navController: NavHostController, mecanicoNome: String) 
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = { showExitDialog = true }) {
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_left_28_regular),
                         contentDescription = "Voltar",
@@ -107,10 +150,6 @@ fun HomeMecanicoContent(navController: NavHostController, mecanicoNome: String) 
             Spacer(modifier = Modifier.height(32.dp))
 
             HomeMecanicoMenuButton(text = "Gerir Reparações") { navController.navigate("gerir_reparacoes") }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            HomeMecanicoMenuButton(text = "Gerir Prazos") { /* Navegar */ }
         }
     }
 }
